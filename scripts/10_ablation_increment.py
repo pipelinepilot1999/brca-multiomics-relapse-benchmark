@@ -26,6 +26,7 @@ import warnings
 import numpy as np
 import pandas as pd
 from lifelines.statistics import logrank_test
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegressionCV, LogisticRegression
@@ -52,7 +53,34 @@ BLOCKS = {
 }
 
 
-def make_model(kind, y_tr, seed, k):
+class ForceKeepSelect(BaseEstimator, TransformerMixin):
+    """Always retain the first `n_force` columns; univariate-select among the rest.
+
+    Needed for a valid incremental-value test. Plain SelectKBest over the pooled
+    matrix can discard the clinical covariates entirely -- 7 clinical columns
+    competing with 19,000 omics columns on univariate F -- so a model labelled
+    "clinical + omics" might contain no clinical features at all, and the
+    contrast would answer a different question than the one asked.
+    """
+
+    def __init__(self, n_force: int, k: int):
+        self.n_force = n_force
+        self.k = k
+
+    def fit(self, X, y=None):
+        rest = X[:, self.n_force:]
+        k = min(self.k, rest.shape[1])
+        self.sel_ = SelectKBest(f_classif, k=k).fit(rest, y) if rest.shape[1] else None
+        return self
+
+    def transform(self, X):
+        head = X[:, :self.n_force]
+        if self.sel_ is None:
+            return head
+        return np.hstack([head, self.sel_.transform(X[:, self.n_force:])])
+
+
+def make_model(kind, y_tr, seed, k, n_force=0):
     if kind == "xgboost":
         pos = int(y_tr.sum()); neg = len(y_tr) - pos
         clf = XGBClassifier(objective="binary:logistic", eval_metric="logloss",
@@ -60,15 +88,17 @@ def make_model(kind, y_tr, seed, k):
                             max_depth=3, learning_rate=0.05, n_estimators=400,
                             subsample=0.8, colsample_bytree=0.6,
                             random_state=seed, n_jobs=8, verbosity=0)
+        sel = ForceKeepSelect(n_force, k) if n_force else SelectKBest(f_classif, k=k)
         steps = [("impute", SimpleImputer(strategy="median")),
-                 ("select", SelectKBest(f_classif, k=k)), ("clf", clf)]
+                 ("select", sel), ("clf", clf)]
     else:  # regularised linear
         clf = LogisticRegressionCV(Cs=[0.01, 0.1, 1.0], cv=3, scoring="roc_auc",
                                    max_iter=4000, class_weight="balanced",
                                    random_state=seed, n_jobs=4)
+        sel = ForceKeepSelect(n_force, k) if n_force else SelectKBest(f_classif, k=k)
         steps = [("impute", SimpleImputer(strategy="median")),
                  ("scale", StandardScaler()),
-                 ("select", SelectKBest(f_classif, k=k)), ("clf", clf)]
+                 ("select", sel), ("clf", clf)]
     return Pipeline(steps)
 
 
@@ -96,12 +126,14 @@ def main() -> None:
     log.info("=" * 66)
     per_fold_store, rows = {}, []
     for name, keys in BLOCKS.items():
+        keys = sorted(keys, key=lambda z: z != "clin")     # clinical columns first
         X = np.hstack([parts[k][0] for k in keys]).astype(np.float32)
+        n_force = parts["clin"][0].shape[1] if ("clin" in keys and len(keys) > 1) else 0
         for kind in ("logreg_l2", "xgboost"):
             k = min(1000 if kind == "logreg_l2" else 2000, X.shape[1])
             recs = []
             for i, (tr, te) in enumerate(folds):
-                m = make_model(kind, y[tr], cfg["seed"] + i, k)
+                m = make_model(kind, y[tr], cfg["seed"] + i, k, n_force=n_force)
                 m.fit(X[tr], y[tr])
                 r = fold_metrics(y[te], m.predict_proba(X[te])[:, 1])
                 r["fold_id"] = i
@@ -111,9 +143,11 @@ def main() -> None:
             s = summarise(df, f"{name}|{kind}")
             s.update({"block": name, "model": kind, "n_features": int(X.shape[1])})
             rows.append(s)
-            log.info("  %-34s %-10s AUC=%.4f [%.4f,%.4f]  AP=%.4f  (%d features)",
+            s["clinical_forced_in"] = bool(n_force)
+            log.info("  %-34s %-10s AUC=%.4f [%.4f,%.4f]  AP=%.4f  (%d feat%s)",
                      name, kind, s["auc_mean"], s["auc_ci_lo"], s["auc_ci_hi"],
-                     s["ap_mean"], X.shape[1])
+                     s["ap_mean"], X.shape[1],
+                     ", clinical forced in" if n_force else "")
     abl = pd.DataFrame(rows)
     save_table(abl, cfg, "phase9_ablation.csv", log)
 

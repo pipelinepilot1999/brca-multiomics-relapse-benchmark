@@ -1,0 +1,9 @@
+n_folds,mean_diff,t_stat,p_value,wilcoxon_p,b_wins_folds,baseline,augmented,model,question
+50,0.0015,0.225,0.8227133970611686,0.7160933233749613,27,expression,expression+methylation,logreg_l2,does methylation add to expression?
+50,-0.0013,-0.19,0.8503027345686494,0.8738779749255332,26,expression,expression+methylation,xgboost,does methylation add to expression?
+50,-0.1303,-11.729,7.808596901737044e-16,5.861977570020827e-14,3,clinical,clinical+expression,logreg_l2,does expression add to clinical?
+50,-0.0665,-4.744,1.851891229272568e-05,1.8759072675678112e-05,12,clinical,clinical+expression,xgboost,does expression add to clinical?
+50,-0.1183,-10.529,3.5345806092148395e-14,1.8989254613188677e-12,3,clinical,clinical+methylation,logreg_l2,does methylation add to clinical?
+50,-0.0992,-7.44,1.386927826076942e-09,6.535714192068554e-10,6,clinical,clinical+methylation,xgboost,does methylation add to clinical?
+50,-0.1327,-12.03,3.084956688424518e-16,3.375077994860476e-14,2,clinical,clinical+expression+methylation,logreg_l2,does ANY omics add to clinical?
+50,-0.0727,-5.982,2.4953650459471593e-07,3.623269506647375e-08,8,clinical,clinical+expression+methylation,xgboost,does ANY omics add to clinical?

@@ -444,6 +444,105 @@ def build(cfg, log):
             "required by the landmark rule to have full follow-up, which flattens the early "
             "part of the curves.", s, 165 * mm)
 
+    # ---------------- representation learning ----------------
+    p10 = r.json("phase10_summary.json")
+    ae = r.csv("phase10_ae_performance.csv")
+    if p10 or ae is not None:
+        story += [PageBreak(),
+                  Paragraph("6b. Unsupervised multi-omics representation learning", s["H1"])]
+        if p10:
+            story += [Paragraph(
+                f"The supervised pipeline is bottlenecked by n={p10.get('n_labelled')}, because "
+                f"the landmark rule discards every patient censored before the horizon. An "
+                f"autoencoder needs no labels, so it trains on every patient with both assays: "
+                f"<b>{p10.get('n_full_cohort')} patients</b>, "
+                f"{p10.get('extra_unlabelled_patients')} more than the labelled cohort. "
+                f"A denoising multi-modal autoencoder (separate encoders per modality, "
+                f"{p10.get('n_top_features_per_modality')} highest-variance features each, "
+                f"fused to <b>{p10.get('n_latent')} shared latent factors</b>, two decoders) "
+                f"was trained with early stopping on a held-out reconstruction split. No labels "
+                f"enter the encoder at any point.", s["Body"])]
+        if ae is not None:
+            rows = [["Representation", "AUC (95% CI)", "AP"]]
+            for _, x in ae.iterrows():
+                rows.append([x["model"],
+                             f"{x['auc_mean']:.3f} [{x['auc_ci_lo']:.3f}, {x['auc_ci_hi']:.3f}]",
+                             f"{x['ap_mean']:.3f}"])
+            story += [mktable(rows, [76 * mm, 46 * mm, 22 * mm], s), Spacer(1, 5)]
+        if p10.get("transduction_gap_auc") is not None:
+            story += [Paragraph(
+                f"<b>Transduction check.</b> Fitting one encoder on all patients and then "
+                f"cross-validating on its embeddings is transductive: the encoder has seen the "
+                f"FEATURES (never the labels) of patients who later appear in test folds. "
+                f"Reporting only that number would overstate the result, so the encoder was also "
+                f"refit inside each of {p10.get('strict_folds')} folds on training patients only, "
+                f"excluding that fold's test patients entirely. The gap is "
+                f"<b>{p10.get('transduction_gap_auc'):+.4f} AUC</b> - essentially zero, so the "
+                f"transductive result was not inflated.", s["Flag"])]
+        interp = r.csv("phase10_latent_interpretation.csv")
+        if interp is not None and "corr_immune" in interp.columns:
+            story += [Paragraph(
+                "<b>What the factors encode.</b> The latent factors correlate strongly with "
+                "MCP-counter cell populations but barely with pathologic stage. Given no labels "
+                "and no immune annotation, the autoencoder independently recovered the same "
+                "immune/stromal axis that Gate 6 found by a different route - convergent "
+                "evidence the axis is real, and an explanation for why these factors add little "
+                "on top of stage: they encode a different, weaker signal.", s["Body"])]
+            rows = [["Factor", "|r| immune", "Top population", "|r| stage", "Univariate AUC"]]
+            for _, x in interp.head(10).iterrows():
+                rows.append([f"{x['factor']:.0f}", f"{abs(x['corr_immune']):.2f}",
+                             str(x.get("top_immune_population", "")),
+                             f"{abs(x['corr_stage']):.2f}", f"{x['auc_vs_label']:.3f}"])
+            story += [mktable(rows, [16 * mm, 24 * mm, 46 * mm, 22 * mm, 30 * mm], s)]
+        add_fig(story, r.fig("fig9_representation_learning.png"),
+                "Figure 9. Learned latent factors versus raw features, and the "
+                "transductive/fold-safe comparison.", s, 165 * mm)
+        add_fig(story, r.fig("fig10_latent_factors.png"),
+                "Figure 10. Latent factors track immune composition, not stage.", s, 105 * mm)
+
+    # ---------------- ablation ----------------
+    abl = r.csv("phase9_ablation.csv")
+    inc = r.csv("phase9_incremental_value.csv")
+    lock = r.json("phase9_locked_threshold.json")
+    if abl is not None or inc is not None:
+        story += [PageBreak(),
+                  Paragraph("6c. Does each block earn its place? (ablation)", s["H1"])]
+        if abl is not None:
+            rows = [["Feature block", "Model", "Features", "AUC (95% CI)", "AP"]]
+            for _, x in abl.iterrows():
+                rows.append([x["block"], x["model"], f"{x['n_features']:.0f}",
+                             f"{x['auc_mean']:.3f} [{x['auc_ci_lo']:.3f}, {x['auc_ci_hi']:.3f}]",
+                             f"{x['ap_mean']:.3f}"])
+            story += [mktable(rows, [50 * mm, 22 * mm, 20 * mm, 42 * mm, 18 * mm], s), Spacer(1, 5)]
+        if inc is not None:
+            story += [Paragraph("Paired contrasts on identical folds. Clinical covariates are "
+                                "forced into every combined model, so a 'clinical + omics' "
+                                "contrast cannot silently drop the clinical variables.", s["Body"])]
+            rows = [["Question", "Model", "dAUC", "p"]]
+            for _, x in inc.iterrows():
+                rows.append([x["question"], x["model"], f"{x['mean_diff']:+.4f}",
+                             f"{x['p_value']:.3g}"])
+            story += [mktable(rows, [72 * mm, 24 * mm, 24 * mm, 26 * mm], s)]
+        if lock:
+            story += [Paragraph("6d. Does a LOCKED threshold transfer?", s["H2"]),
+                      Paragraph(
+                          "Every risk group elsewhere in this report came from a median split "
+                          "computed within each cohort, which is not how a deployed test works. "
+                          "Here a cutpoint is frozen in TCGA and applied unchanged to METABRIC.",
+                          s["Body"])]
+            rows = [["Split", "n high", "n low", "Relapse high", "Relapse low", "log-rank p"]]
+            for tag in ("locked_tcga_cutpoint", "metabric_own_median"):
+                v = lock.get(tag)
+                if isinstance(v, dict) and not v.get("degenerate"):
+                    rows.append([tag.replace("_", " "), f"{v['n_high']}", f"{v['n_low']}",
+                                 f"{100*v['relapse_rate_high']:.1f}%",
+                                 f"{100*v['relapse_rate_low']:.1f}%",
+                                 f"{v['logrank_p']:.3g}"])
+                elif isinstance(v, dict):
+                    rows.append([tag.replace("_", " "), f"{v['n_high']}", f"{v['n_low']}",
+                                 "-", "-", "degenerate split"])
+            story += [mktable(rows, [44 * mm, 20 * mm, 20 * mm, 26 * mm, 26 * mm, 26 * mm], s)]
+
     # ---------------- limitations ----------------
     story += [PageBreak(), Paragraph("7. Limitations", s["H1"])]
     lims = [

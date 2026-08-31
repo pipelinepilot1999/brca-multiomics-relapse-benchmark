@@ -1,11 +1,13 @@
-2026-08-31 09:19:32,539 | INFO    | 08_figures | ======================================================================
-2026-08-31 09:19:32,539 | INFO    | 08_figures | start 08_figures | config=config/config.yaml | seed=42
-2026-08-31 09:19:32,839 | INFO    | 08_figures | wrote results/figures/fig1_horizon_sensitivity.png
-2026-08-31 09:19:33,175 | INFO    | 08_figures | wrote results/figures/fig2_model_comparison.png
-2026-08-31 09:19:33,320 | INFO    | 08_figures | wrote results/figures/fig3_roc_oof.png
-2026-08-31 09:19:33,620 | INFO    | 08_figures | wrote results/figures/fig4_shap_top30.png
-2026-08-31 09:19:33,931 | INFO    | 08_figures | wrote results/figures/fig5_panel_size_curve.png
-2026-08-31 09:19:34,073 | INFO    | 08_figures | wrote results/figures/fig6_immune_deconvolution.png
-2026-08-31 09:19:34,554 | INFO    | 08_figures | wrote results/figures/fig7_kaplan_meier.png
-2026-08-31 09:19:34,789 | INFO    | 08_figures | wrote results/figures/fig8_metabric_validation.png
-2026-08-31 09:19:34,789 | INFO    | 08_figures | figures complete
+2026-08-31 20:09:44,813 | INFO    | 08_figures | ======================================================================
+2026-08-31 20:09:44,813 | INFO    | 08_figures | start 08_figures | config=config/config.yaml | seed=42
+2026-08-31 20:09:45,228 | INFO    | 08_figures | wrote results/figures/fig1_horizon_sensitivity.png
+2026-08-31 20:09:45,649 | INFO    | 08_figures | wrote results/figures/fig2_model_comparison.png
+2026-08-31 20:09:45,867 | INFO    | 08_figures | wrote results/figures/fig3_roc_oof.png
+2026-08-31 20:09:46,251 | INFO    | 08_figures | wrote results/figures/fig4_shap_top30.png
+2026-08-31 20:09:46,725 | INFO    | 08_figures | wrote results/figures/fig5_panel_size_curve.png
+2026-08-31 20:09:46,939 | INFO    | 08_figures | wrote results/figures/fig6_immune_deconvolution.png
+2026-08-31 20:09:47,536 | INFO    | 08_figures | wrote results/figures/fig7_kaplan_meier.png
+2026-08-31 20:09:47,877 | INFO    | 08_figures | wrote results/figures/fig8_metabric_validation.png
+2026-08-31 20:09:48,462 | INFO    | 08_figures | wrote results/figures/fig9_representation_learning.png
+2026-08-31 20:09:48,753 | INFO    | 08_figures | wrote results/figures/fig10_latent_factors.png
+2026-08-31 20:09:48,753 | INFO    | 08_figures | figures complete

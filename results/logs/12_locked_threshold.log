@@ -1,0 +1,15 @@
+2026-08-31 20:09:09,363 | INFO    | 12_locked_threshold | ======================================================================
+2026-08-31 20:09:09,363 | INFO    | 12_locked_threshold | start 12_locked_threshold | config=config/config.yaml | seed=42
+2026-08-31 20:09:22,121 | INFO    | 12_locked_threshold | METABRIC: n=1902, 359 positive (18.9%)
+2026-08-31 20:09:22,207 | INFO    | 12_locked_threshold | panel   20 (  9 genes) AUC=0.6321 | LOCKED cut=0.4101 p=1.2e-05   RR=1.95  | own-median p=4.68e-06  | score shift +0.0328
+2026-08-31 20:09:22,289 | INFO    | 12_locked_threshold | panel   50 ( 29 genes) AUC=0.5309 | LOCKED cut=0.3397 p=0.745     RR=1.1   | own-median p=0.818     | score shift +0.0375
+2026-08-31 20:09:22,373 | INFO    | 12_locked_threshold | panel  100 ( 62 genes) AUC=0.5331 | LOCKED cut=0.2793 p=0.883     RR=1.05  | own-median p=0.628     | score shift +0.0188
+2026-08-31 20:09:22,466 | INFO    | 12_locked_threshold | panel  250 (162 genes) AUC=0.5215 | LOCKED cut=0.1617 p=0.55      RR=1.02  | own-median p=0.42      | score shift +0.0246
+2026-08-31 20:09:22,570 | INFO    | 12_locked_threshold | panel  500 (319 genes) AUC=0.4806 | LOCKED cut=0.0889 p=0.942     RR=0.86  | own-median p=0.824     | score shift +0.0405
+2026-08-31 20:09:22,574 | INFO    | 12_locked_threshold | wrote results/tables/phase12_locked_threshold_all_panels.csv  shape=(5, 17)
+2026-08-31 20:09:22,576 | INFO    | 12_locked_threshold | ======================================================================
+2026-08-31 20:09:22,577 | INFO    | 12_locked_threshold | BEST-TRANSFERRING panel 20 (9 genes, AUC 0.6321):
+2026-08-31 20:09:22,577 | INFO    | 12_locked_threshold |   LOCKED TCGA cutpoint  -> log-rank p=1.2e-05, high-risk relapse 23.9% vs 12.2% (RR 1.95)
+2026-08-31 20:09:22,577 | INFO    | 12_locked_threshold |   METABRIC own median   -> log-rank p=4.68e-06
+2026-08-31 20:09:22,577 | INFO    | 12_locked_threshold |   cutpoint transferred? YES - locked and data-driven splits agree (score shift +0.0328)
+2026-08-31 20:09:22,578 | INFO    | 12_locked_threshold | wrote results/tables/phase12_summary.json

@@ -306,6 +306,75 @@ and multi-omics adds no significant increment on top of it.
 
 ---
 
+## Does each omics block earn its place? (Phase 9 ablation)
+
+Seven feature blocks, two model families, all on the **same 50 outer folds**.
+Clinical covariates are *forced into* every combined model (a custom selector
+retains them before univariate selection touches the omics), so a
+"clinical + omics" contrast cannot silently drop stage and answer a different
+question than the one asked.
+
+| Feature block | Logistic L2 | XGBoost |
+|---|---|---|
+| **Clinical only** | **0.778** | 0.742 |
+| Expression only | 0.614 | 0.638 |
+| Methylation only | 0.610 | 0.595 |
+| Expression + methylation | 0.616 | 0.637 |
+| Clinical + expression | 0.647 | 0.676 |
+| Clinical + methylation | 0.659 | 0.643 |
+| Clinical + expression + methylation | 0.645 | 0.670 |
+
+### Paired contrasts
+
+| Question | Model | ΔAUC | p | Omics wins |
+|---|---|---|---|---|
+| Does methylation add to expression? | logistic | +0.0015 | 0.82 | 27/50 |
+| Does methylation add to expression? | XGBoost | −0.0013 | 0.85 | 26/50 |
+| Does expression add to clinical? | logistic | −0.130 | 7.8e-16 | 3/50 |
+| Does methylation add to clinical? | logistic | −0.118 | 3.5e-14 | 3/50 |
+| **Does ANY omics add to clinical?** | logistic | **−0.133** | **3.1e-16** | **2/50** |
+| **Does ANY omics add to clinical?** | XGBoost | **−0.073** | **2.5e-07** | **8/50** |
+
+Two clean answers:
+
+1. **Methylation adds nothing over expression** — +0.0015 / −0.0013, opposite
+   signs across model families, both p > 0.8. The second omics layer does not
+   pay for itself. "Multi-omics" is honest as a description of the inputs, but
+   is *not* supported as a performance claim.
+2. **No omics combination adds incremental value over clinical.** Even with
+   stage forced into the model and strong regularisation applied, omics *hurts*
+   significantly, winning on 2–8 of 50 folds. This is the version of the test
+   that matters clinically, and it fails.
+
+## Does a locked threshold transfer? (Phase 12)
+
+Every risk group elsewhere in this report came from a median split computed
+*within* each cohort. That is not how a deployed test works: a real signature
+carries a fixed cutpoint. So the model is fit once on all of TCGA, the
+**coefficients and a single threshold number are frozen**, and that exact number
+is applied to METABRIC.
+
+| Panel | Genes | METABRIC AUC | Locked cutpoint p | Own-median p | Agree? |
+|---|---|---|---|---|---|
+| **20** | **9** | **0.632** | **1.2e-05** | 4.7e-06 | **yes** |
+| 50 | 29 | 0.531 | 0.745 | 0.818 | yes (both fail) |
+| 100 | 62 | 0.533 | 0.883 | 0.628 | yes (both fail) |
+| 250 | 162 | 0.522 | 0.55 | 0.42 | yes (both fail) |
+| 500 | 319 | 0.481 | 0.942 | 0.824 | yes (both fail) |
+
+**The 9-gene panel with a frozen cutpoint (0.4101) works.** In 1,902 independent
+METABRIC patients it separates **23.9% relapse (high risk) from 12.2% (low risk)
+— a risk ratio of 1.95**, log-rank p = 1.2e-05.
+
+And the locked and data-driven splits **agree at every panel size**, with score
+shifts of only +0.02 to +0.04. So cutpoint transfer is *not* the failure mode —
+panel quality is. An earlier version of this analysis tested threshold-locking
+using the 50-marker panel alone, which Gate 7 had already shown does not
+transfer; that conflated "does this panel work" with "does a fixed threshold
+work", and testing every panel size is what separates them.
+
+---
+
 ## Reproduce it
 
 ### Smoke test — the fast path (no download, ~50 s)
@@ -413,9 +482,13 @@ in-sample TCGA AUC of 1.000 — is labelled as such wherever it appears.
   selected cohort in which stage is unusually predictive.
 - **The signature is unstable** — most top-ranked markers appear in <20% of folds.
 - **External discrimination is weak** (METABRIC AUC 0.632 vs 0.669 internally),
-  even though risk-group separation replicates (p = 4.7e-06). The signature is
-  externally *reproducible* but not externally *strong*, and it is still beaten
-  by stage alone.
+  even though risk-group separation replicates with a locked cutpoint
+  (RR 1.95, p = 1.2e-05). The signature is externally *reproducible* but not
+  externally *strong*.
+- **Omics adds no incremental value over clinical** (ΔAUC −0.073 to −0.133, all
+  p < 1e-6, winning 2–8 of 50 folds). This is the decisive negative: the panel
+  requires an RNA-seq assay to underperform a number already on the pathology
+  report.
 - **Only expression was externally testable**; a multi-omics signature validated on
   one modality is partially validated at best.
 - **Cross-platform transfer** confounds signature quality with platform shift.

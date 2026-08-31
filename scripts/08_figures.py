@@ -223,6 +223,80 @@ def fig_metabric(cfg, log):
     _save(fig, cfg, "fig8_metabric_validation.png", log)
 
 
+
+def fig_representation(cfg, log):
+    """Phase 10: learned latent factors vs raw features, and the transduction check."""
+    p = T(cfg, "phase10_ae_performance.csv")
+    if not p.exists():
+        return
+    d = pd.read_csv(p)
+    abl = T(cfg, "phase9_ablation.csv")
+    fig, ax = plt.subplots(1, 2, figsize=(11, 4))
+
+    # left: dimensionality vs AUC
+    pts = []
+    if abl.exists():
+        a = pd.read_csv(abl)
+        for _, x in a[a["block"] == "expression+methylation"].iterrows():
+            pts.append((x["n_features"], x["auc_mean"], f"raw ({x['model']})", C["grey"]))
+    row = d[d["model"] == "AE latent (transductive)"]
+    if len(row):
+        pts.append((30, float(row["auc_mean"].iloc[0]), "AE latent (30)", C["C"]))
+    for nf, auc, lbl, c in pts:
+        ax[0].scatter(nf, auc, s=90, color=c, zorder=3, edgecolor="k", linewidth=0.5)
+        ax[0].annotate(lbl, (nf, auc), textcoords="offset points", xytext=(6, 6), fontsize=7.5)
+    cl = d[d["model"] == "clinical only"]
+    if len(cl):
+        ax[0].axhline(float(cl["auc_mean"].iloc[0]), ls="--", c=C["A"], lw=1.2,
+                      label="clinical only")
+    ax[0].set_xscale("log")
+    ax[0].set_xlabel("number of features (log scale)")
+    ax[0].set_ylabel("AUC")
+    ax[0].set_title("Learned representation vs raw features")
+    ax[0].legend(fontsize=7)
+
+    # right: model comparison bars
+    order = ["clinical only", "AE latent (transductive)", "AE latent + clinical (transductive)",
+             "AE latent (fold-safe)", "AE latent + clinical (fold-safe)"]
+    sub = d[d["model"].isin(order)].set_index("model").reindex(order).dropna(subset=["auc_mean"])
+    cols = [C["A"] if "clinical only" in m else (C["C"] if "fold-safe" in m else C["B"])
+            for m in sub.index]
+    yerr = [sub["auc_mean"] - sub["auc_ci_lo"], sub["auc_ci_hi"] - sub["auc_mean"]]
+    ax[1].barh(range(len(sub)), sub["auc_mean"], xerr=yerr, color=cols,
+               error_kw=dict(lw=1, capsize=3))
+    ax[1].set_yticks(range(len(sub)))
+    ax[1].set_yticklabels([m.replace(" (transductive)", "\n(transductive)")
+                           .replace(" (fold-safe)", "\n(fold-safe)") for m in sub.index],
+                          fontsize=7)
+    ax[1].axvline(0.5, ls=":", c=C["grey"], lw=1)
+    ax[1].set_xlim(0.45, 0.9)
+    ax[1].set_xlabel("AUC")
+    ax[1].set_title("Autoencoder factors vs clinical baseline")
+    _save(fig, cfg, "fig9_representation_learning.png", log)
+
+
+def fig_latent_immune(cfg, log):
+    """What the unsupervised factors actually encode."""
+    p = T(cfg, "phase10_latent_interpretation.csv")
+    if not p.exists():
+        return
+    d = pd.read_csv(p)
+    if "corr_immune" not in d.columns:
+        return
+    fig, ax = plt.subplots(figsize=(5.6, 4))
+    ax.scatter(d["corr_immune"].abs(), d["corr_stage"].abs(), s=55,
+               c=d["auc_vs_label"], cmap="viridis", edgecolor="k", linewidth=0.4)
+    lim = max(0.55, float(d["corr_immune"].abs().max()) + 0.05)
+    ax.plot([0, lim], [0, lim], ls="--", c=C["grey"], lw=1)
+    ax.set_xlabel("|correlation| with strongest immune population")
+    ax.set_ylabel("|correlation| with pathologic stage")
+    ax.set_xlim(0, lim); ax.set_ylim(0, lim)
+    ax.set_title("Latent factors encode immune biology,\nnot stage")
+    cb = fig.colorbar(ax.collections[0], ax=ax)
+    cb.set_label("univariate AUC vs relapse", fontsize=8)
+    _save(fig, cfg, "fig10_latent_factors.png", log)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
@@ -231,7 +305,8 @@ def main() -> None:
     set_seed(cfg["seed"])
     log = get_logger("08_figures", cfg)
     for fn in (fig_horizon, fig_model_comparison, fig_roc, fig_shap,
-               fig_panel_curve, fig_immune, fig_km, fig_metabric):
+               fig_panel_curve, fig_immune, fig_km, fig_metabric,
+               fig_representation, fig_latent_immune):
         try:
             fn(cfg, log)
         except Exception as exc:  # noqa: BLE001

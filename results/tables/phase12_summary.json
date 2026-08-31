@@ -1,0 +1,9 @@
+{
+  "best_panel": 20,
+  "best_metabric_auc": 0.6321,
+  "locked_logrank_p": 1.204124522453278e-05,
+  "own_median_logrank_p": 4.6820361497543345e-06,
+  "locked_risk_ratio": 1.95,
+  "cutpoint_transferred": true,
+  "score_shift": 0.0328
+}
