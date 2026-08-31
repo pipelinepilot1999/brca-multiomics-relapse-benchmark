@@ -10,12 +10,6 @@ diagnosis. **They do not.** The pipeline, the negative result, and the
 diagnostics that establish it are all reproducible from this repository — the
 full analysis runs offline on a bundled fixture in under a minute.
 
-> **A note on the title.** An earlier version of this project was called
-> *"Multi-Omics Biomarker Signature for Breast Cancer Relapse."* The ablation in
-> Phase 9 showed methylation contributes +0.0015 AUC over expression alone, and
-> that no omics combination adds incremental value over clinical staging. The
-> title was changed to match the evidence rather than the ambition.
-
 ---
 
 ## Abstract
@@ -357,6 +351,11 @@ Two clean answers:
    stage forced into the model and strong regularisation applied, omics *hurts*
    significantly, winning on 2–8 of 50 folds. This is the version of the test
    that matters clinically, and it fails.
+
+These two results are why this project is framed as a benchmark rather than as a
+signature discovery. The analysis was specified to test whether a multi-omics
+signature beats clinical staging; it does not, and the framing follows the
+evidence.
 
 ## Does a locked threshold transfer? (Phase 12)
 
