@@ -352,11 +352,6 @@ Two clean answers:
    significantly, winning on 2–8 of 50 folds. This is the version of the test
    that matters clinically, and it fails.
 
-These two results are why this project is framed as a benchmark rather than as a
-signature discovery. The analysis was specified to test whether a multi-omics
-signature beats clinical staging; it does not, and the framing follows the
-evidence.
-
 ## Does a locked threshold transfer? (Phase 12)
 
 Every risk group elsewhere in this report came from a median split computed
@@ -377,12 +372,10 @@ is applied to METABRIC.
 METABRIC patients it separates **23.9% relapse (high risk) from 12.2% (low risk)
 — a risk ratio of 1.95**, log-rank p = 1.2e-05.
 
-And the locked and data-driven splits **agree at every panel size**, with score
-shifts of only +0.02 to +0.04. So cutpoint transfer is *not* the failure mode —
-panel quality is. An earlier version of this analysis tested threshold-locking
-using the 50-marker panel alone, which Gate 7 had already shown does not
-transfer; that conflated "does this panel work" with "does a fixed threshold
-work", and testing every panel size is what separates them.
+The locked and data-driven splits **agree at every panel size**, with score
+shifts of only +0.02 to +0.04. Cutpoint transfer is therefore *not* the failure
+mode — panel quality is. Testing every panel size rather than one is what
+separates those two explanations.
 
 ---
 
