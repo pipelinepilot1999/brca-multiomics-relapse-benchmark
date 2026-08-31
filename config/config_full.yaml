@@ -1,0 +1,97 @@
+# FULL-COHORT CONFIG -- every patient with both modalities, labelled or not.
+# Used only for unsupervised representation learning (Phase 10).
+# Multi-omics biomarker signature for 5-year breast cancer relapse
+project: biomarker-signature-brca
+seed: 42
+
+paths:
+  raw: data/raw
+  processed: data/processed_full
+  interim: data/interim
+  tables: results/tables_full
+  figures: results/figures_full
+  logs: results/logs_full
+
+files:
+  tcga_expression:  data/raw/TCGA-BRCA.star_counts.tsv.gz
+  tcga_methylation: data/raw/TCGA-BRCA.methylation450.tsv.gz
+  tcga_clinical:    data/raw/TCGA-BRCA.clinical.tsv.gz
+  tcga_survival:    data/raw/TCGA-BRCA.survival.tsv.gz
+  tcga_cdr:         data/raw/TCGA-CDR_Survival_S1.tsv
+  tcga_subtype:     data/raw/TCGASubtype.20170308.tsv.gz
+  methyl_manifest:  data/raw/GPL13534_450k_manifest.csv.gz
+  mcp_genes:        data/raw/MCPcounter_genes.txt
+  gencode_gtf:      data/raw/gencode.v36.annotation.gtf.gz
+  metabric_expr:    data/raw/metabric_data_mrna_illumina_microarray.txt
+  metabric_patient: data/raw/metabric_data_clinical_patient.txt
+  metabric_sample:  data/raw/metabric_data_clinical_sample.txt
+
+label:
+  # Relapse from PFI (Progression-Free Interval, TCGA-CDR / Liu et al. 2018).
+  #
+  # DEVIATION FROM SPEC, recorded deliberately. The spec targets a 5-year (1825d)
+  # horizon and expects n=550-750 with 15-25% positives. Measured on the actual
+  # TCGA-BRCA cohort with matched expression AND methylation (universe = 782
+  # patients), no horizon reaches n>=400 AND positives>=60 simultaneously:
+  #     2y: n=460 pos=49  (10.7%)  <- fails positives floor
+  #     3y: n=367 pos=68  (18.5%)  <- only horizon inside the 15-25% band
+  #     4y: n=297 pos=80  (26.9%)
+  #     5y: n=254 pos=94  (37.0%)  <- spec's target horizon, worst n
+  # 3 years is chosen as primary: it clears the positives floor and is the only
+  # horizon whose prevalence lands in the expected band. It misses the n>=400
+  # floor by 33 patients. The 5-year analysis is retained in full as a
+  # sensitivity run (config/config_5y.yaml). See results/tables/
+  # gate1_horizon_sensitivity.csv.
+  horizon_days: 1095
+  horizon_label: "3-year"
+  cancer_type: BRCA
+
+assembly:
+  # Expression filters
+  expr_min_variance_quantile: 0.50   # drop bottom 50% of genes by variance
+  expr_protein_coding_only: true
+  # Methylation filters
+  methyl_promoter_groups: ["TSS1500", "TSS200", "5'UTR", "1stExon"]
+  methyl_max_na_frac_probe: 0.10     # drop probes with >10% missing
+  methyl_max_na_frac_sample: 0.10    # drop samples with >10% missing
+  methyl_min_variance_quantile: 0.50
+  drop_sex_chromosomes: true         # methylation on X/Y confounds
+
+cv:
+  n_splits: 5
+  n_repeats: 10          # 50 outer folds, shared identically by Models A, B, C
+  inner_splits: 3
+  n_random_search: 10
+
+model_b:
+  select_k: 2000         # univariate pre-selection INSIDE each fold
+  param_grid:
+    max_depth: [2, 3, 4, 5]
+    learning_rate: [0.01, 0.05, 0.1]
+    n_estimators: [200, 400, 600]
+    subsample: [0.6, 0.8, 1.0]
+    colsample_bytree: [0.3, 0.6, 0.9]
+    min_child_weight: [1, 3, 5]
+    reg_lambda: [1.0, 5.0, 10.0]
+
+model_c:
+  select_k: 2000
+  hidden: 64
+  dropout: 0.4
+  weight_decay: 1.0e-4
+  lr: 1.0e-3
+  max_epochs: 200
+  patience: 10
+  batch_size: 32
+  min_pathway_genes: 10
+  max_pathway_genes: 300
+
+signature:
+  panel_sizes: [20, 50, 100, 250, 500]
+
+deconv:
+  method: mcp_counter
+
+smoke:
+  n_patients: 100
+  n_repeats: 1

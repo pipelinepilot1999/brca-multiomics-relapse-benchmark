@@ -1,0 +1,11 @@
+{
+  "n_labelled": 367,
+  "n_full_cohort": 777,
+  "extra_unlabelled_patients": 410,
+  "n_latent": 30,
+  "n_top_features_per_modality": 4000,
+  "transductive_epochs": 60,
+  "transductive_val_loss": 0.986574649810791,
+  "transduction_gap_auc": -0.0046,
+  "strict_folds": 10
+}

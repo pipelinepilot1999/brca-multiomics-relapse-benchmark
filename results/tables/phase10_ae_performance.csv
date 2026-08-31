@@ -1,0 +1,7 @@
+model,n_folds,auc_mean,auc_sd,auc_ci_lo,auc_ci_hi,ap_mean,ap_sd,ap_ci_lo,ap_ci_hi,encoder,n_folds_used
+clinical only,50,0.7776,0.0583,0.7615,0.7938,0.5429,0.1074,0.5132,0.5727,n/a,
+AE latent (transductive),50,0.664,0.0817,0.6413,0.6866,0.3666,0.0951,0.3402,0.3929,transductive,
+AE latent + clinical (transductive),50,0.781,0.0701,0.7616,0.8005,0.5497,0.1212,0.5162,0.5833,transductive,
+"AE latent + clinical (transductive, xgb)",50,0.7238,0.0751,0.703,0.7447,0.4447,0.1014,0.4166,0.4728,transductive,
+AE latent (fold-safe),10,0.6697,0.1065,0.6037,0.7358,0.3598,0.0946,0.3012,0.4185,fold-safe,10.0
+AE latent + clinical (fold-safe),10,0.7914,0.0959,0.732,0.8508,0.5615,0.1256,0.4836,0.6393,fold-safe,10.0

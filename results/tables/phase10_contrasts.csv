@@ -1,0 +1,3 @@
+n_folds,mean_diff,t_stat,p_value,wilcoxon_p,b_wins_folds,baseline,augmented
+50,0.0034,0.415,0.679662015968313,0.44326672141018975,28,clinical only,AE latent + clinical (transductive)
+50,-0.1136,-8.439,4.106446780509809e-11,5.739471593129941e-09,2,clinical only,AE latent (transductive)

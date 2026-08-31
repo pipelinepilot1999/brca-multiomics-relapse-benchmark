@@ -1,0 +1,60 @@
+2026-08-31 18:56:33,324 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 18:56:33,324 | INFO    | 11_multiomics_autoencoder | start 11_multiomics_autoencoder | config=config/config.yaml | seed=42
+2026-08-31 18:56:35,590 | INFO    | 11_multiomics_autoencoder | labelled cohort n=367 (68 positive) | full cohort n=777 (410 extra unlabelled)
+2026-08-31 18:56:35,661 | INFO    | 11_multiomics_autoencoder | variance filter: expression 9758->4000, methylation 9573->4000
+2026-08-31 18:56:35,791 | INFO    | 11_multiomics_autoencoder | reusing 50 existing outer folds from cv_folds.json
+2026-08-31 18:56:35,792 | INFO    | 11_multiomics_autoencoder | clinical: keeping 'age' (0.0% missing, median-imputed)
+2026-08-31 18:56:35,792 | INFO    | 11_multiomics_autoencoder | clinical: keeping 'stage' (2.7% missing, median-imputed)
+2026-08-31 18:56:35,792 | INFO    | 11_multiomics_autoencoder | clinical: dropping 'grade' (100% missing)
+2026-08-31 18:56:35,794 | INFO    | 11_multiomics_autoencoder | clinical: keeping PAM50 one-hot (5 levels, 0.0% unknown)
+2026-08-31 18:56:35,795 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 18:56:35,795 | INFO    | 11_multiomics_autoencoder | A. TRANSDUCTIVE encoder -- fit once on all 777 patients (no labels)
+2026-08-31 18:56:35,795 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 18:56:38,025 | INFO    | 11_multiomics_autoencoder |     [transductive] epoch   0  val recon loss 1.55932
+2026-08-31 18:57:02,558 | INFO    | 11_multiomics_autoencoder |     [transductive] epoch  50  val recon loss 0.99440
+2026-08-31 18:57:06,893 | INFO    | 11_multiomics_autoencoder |     [transductive] stopped at epoch 60, best val recon loss 0.98657
+2026-08-31 18:57:06,903 | INFO    | 11_multiomics_autoencoder | latent embedding: (367, 30)
+2026-08-31 18:57:10,199 | INFO    | 11_multiomics_autoencoder |   clinical only                                  AUC=0.7776 [0.7615,0.7938]  AP=0.5429
+2026-08-31 18:57:12,235 | INFO    | 11_multiomics_autoencoder |   AE latent (transductive)                       AUC=0.6640 [0.6413,0.6866]  AP=0.3666
+2026-08-31 18:57:16,080 | INFO    | 11_multiomics_autoencoder |   AE latent + clinical (transductive)            AUC=0.7810 [0.7616,0.8005]  AP=0.5497
+2026-08-31 18:57:27,685 | INFO    | 11_multiomics_autoencoder |   AE latent + clinical (transductive, xgb)       AUC=0.7238 [0.7030,0.7447]  AP=0.4447
+2026-08-31 18:57:27,686 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 18:57:27,686 | INFO    | 11_multiomics_autoencoder | B. FOLD-SAFE encoder -- refit inside each of 10 folds, training patients only
+2026-08-31 18:57:27,686 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 18:57:54,305 | INFO    | 11_multiomics_autoencoder |   fold  1/10: encoder trained on 703 patients (74 test held out), 65 epochs, val loss 0.97930
+2026-08-31 18:58:22,104 | INFO    | 11_multiomics_autoencoder |   fold  2/10: encoder trained on 703 patients (74 test held out), 68 epochs, val loss 1.09607
+2026-08-31 18:58:46,431 | INFO    | 11_multiomics_autoencoder |   fold  3/10: encoder trained on 704 patients (73 test held out), 59 epochs, val loss 1.06230
+2026-08-31 18:59:09,061 | INFO    | 11_multiomics_autoencoder |   fold  4/10: encoder trained on 704 patients (73 test held out), 55 epochs, val loss 1.08817
+2026-08-31 18:59:31,629 | INFO    | 11_multiomics_autoencoder |   fold  5/10: encoder trained on 704 patients (73 test held out), 55 epochs, val loss 1.00227
+2026-08-31 18:59:57,378 | INFO    | 11_multiomics_autoencoder |   fold  6/10: encoder trained on 703 patients (74 test held out), 63 epochs, val loss 1.06339
+2026-08-31 19:00:23,699 | INFO    | 11_multiomics_autoencoder |   fold  7/10: encoder trained on 703 patients (74 test held out), 64 epochs, val loss 1.11682
+2026-08-31 19:00:48,963 | INFO    | 11_multiomics_autoencoder |   fold  8/10: encoder trained on 704 patients (73 test held out), 62 epochs, val loss 1.07019
+2026-08-31 19:01:13,508 | INFO    | 11_multiomics_autoencoder |   fold  9/10: encoder trained on 704 patients (73 test held out), 60 epochs, val loss 1.04251
+2026-08-31 19:01:37,717 | INFO    | 11_multiomics_autoencoder |   fold 10/10: encoder trained on 704 patients (73 test held out), 58 epochs, val loss 1.04698
+2026-08-31 19:01:38,131 | INFO    | 11_multiomics_autoencoder |   AE latent (fold-safe)                          AUC=0.6697 [0.6037,0.7358]  AP=0.3598
+2026-08-31 19:01:38,774 | INFO    | 11_multiomics_autoencoder |   AE latent + clinical (fold-safe)               AUC=0.7914 [0.7320,0.8508]  AP=0.5615
+2026-08-31 19:01:38,774 | INFO    | 11_multiomics_autoencoder | ----------------------------------------------------------------------
+2026-08-31 19:01:39,240 | INFO    | 11_multiomics_autoencoder |   AE latent (transductive, first 10 folds)       AUC=0.6651 [0.6139,0.7164]  AP=0.3648
+2026-08-31 19:01:39,241 | INFO    | 11_multiomics_autoencoder | TRANSDUCTION GAP on identical folds: -0.0046 AUC (transductive minus fold-safe)
+2026-08-31 19:01:39,244 | INFO    | 11_multiomics_autoencoder | wrote results/tables/phase10_ae_performance.csv  shape=(6, 12)
+2026-08-31 19:01:39,251 | INFO    | 11_multiomics_autoencoder |   clinical only                          -> AE latent + clinical (transductive)        dAUC=+0.0034 p=0.68
+2026-08-31 19:01:39,257 | INFO    | 11_multiomics_autoencoder |   clinical only                          -> AE latent (transductive)                   dAUC=-0.1136 p=4.11e-11
+2026-08-31 19:01:39,259 | INFO    | 11_multiomics_autoencoder | wrote results/tables/phase10_contrasts.csv  shape=(2, 8)
+2026-08-31 19:01:39,259 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 19:01:39,259 | INFO    | 11_multiomics_autoencoder | LATENT FACTOR INTERPRETATION
+2026-08-31 19:01:39,259 | INFO    | 11_multiomics_autoencoder | ======================================================================
+2026-08-31 19:01:39,333 | INFO    | 11_multiomics_autoencoder | wrote results/tables/phase10_latent_interpretation.csv  shape=(30, 5)
+2026-08-31 19:01:39,337 | INFO    | 11_multiomics_autoencoder | top latent factors by univariate association with relapse:
+ factor  corr_stage  auc_vs_label top_immune_population  corr_immune
+     21       0.046         0.634     Endothelial cells       -0.428
+     15      -0.001         0.615           CD8 T cells       -0.264
+      5      -0.097         0.589     Endothelial cells        0.414
+     25      -0.121         0.586     Monocytic lineage       -0.369
+     22      -0.034         0.584              NK cells        0.192
+     12      -0.086         0.584           Neutrophils        0.226
+     17       0.014         0.578           Fibroblasts       -0.459
+      7       0.030         0.577           Neutrophils        0.191
+     14      -0.093         0.572           CD8 T cells        0.317
+     20      -0.106         0.568     Endothelial cells        0.373
+2026-08-31 19:01:39,337 | INFO    | 11_multiomics_autoencoder | wrote results/tables/phase10_summary.json
+2026-08-31 19:01:39,337 | INFO    | 11_multiomics_autoencoder | PHASE 10 COMPLETE

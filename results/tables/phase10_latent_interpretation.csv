@@ -1,0 +1,31 @@
+factor,corr_stage,auc_vs_label,top_immune_population,corr_immune
+21,0.046,0.634,Endothelial cells,-0.428
+15,-0.001,0.615,CD8 T cells,-0.264
+5,-0.097,0.589,Endothelial cells,0.414
+25,-0.121,0.5860000000000001,Monocytic lineage,-0.369
+22,-0.034,0.5840000000000001,NK cells,0.192
+12,-0.086,0.5840000000000001,Neutrophils,0.226
+17,0.014,0.578,Fibroblasts,-0.459
+7,0.03,0.577,Neutrophils,0.191
+14,-0.093,0.5720000000000001,CD8 T cells,0.317
+20,-0.106,0.5680000000000001,Endothelial cells,0.373
+9,-0.113,0.5680000000000001,T cells,0.666
+19,0.048,0.556,B lineage,-0.185
+28,-0.057,0.554,Endothelial cells,-0.277
+11,0.007,0.55,Monocytic lineage,-0.545
+13,0.02,0.5469999999999999,Fibroblasts,0.205
+2,0.0,0.536,CD8 T cells,-0.244
+10,0.007,0.536,Neutrophils,0.2
+1,-0.024,0.532,Endothelial cells,0.25
+4,0.004,0.528,T cells,0.59
+26,0.069,0.527,Fibroblasts,-0.512
+8,-0.084,0.527,Myeloid dendritic cells,0.489
+3,-0.092,0.526,Endothelial cells,0.619
+6,0.057,0.526,Endothelial cells,0.547
+18,0.023,0.522,T cells,0.596
+29,-0.061,0.521,Fibroblasts,0.258
+27,-0.016,0.513,Monocytic lineage,0.557
+23,-0.004,0.513,Monocytic lineage,0.58
+0,0.066,0.507,Fibroblasts,-0.362
+24,0.008,0.507,Myeloid dendritic cells,-0.411
+16,-0.02,0.501,Monocytic lineage,-0.318

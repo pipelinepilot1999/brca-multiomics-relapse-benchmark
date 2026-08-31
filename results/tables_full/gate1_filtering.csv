@@ -1,0 +1,35 @@
+stage,step,unit,n_in,n_out,n_dropped
+assembly,TCGA-CDR rows (all cancer types),samples,12591,12591,0
+assembly,restrict to BRCA,samples,12591,1236,11355
+assembly,drop TCGA-redacted patients,samples,1236,1230,6
+assembly,de-duplicate to one row per patient,samples,1230,1092,138
+assembly,drop patients with missing PFI or PFI.time,samples,1092,1091,1
+assembly,RETAINED censored-before-1095d patients for unsupervised use,patients,586,586,0
+assembly,positives (relapse <= 5y),patients,89,89,0
+assembly,negatives (relapse-free through 5y),patients,416,416,0
+assembly,expression: raw genes,genes,60660,60660,0
+assembly,expression: raw samples (aliquots),aliquots,1226,1226,0
+assembly,expression: keep primary tumour (sample type 01),aliquots,1226,1106,120
+assembly,expression: collapse aliquots to one per patient,aliquots,1106,1095,11
+assembly,expression: drop chrY PAR_Y duplicate accessions,genes,60660,60616,44
+assembly,expression: genes mappable to GENCODE v36,genes,60616,60616,0
+assembly,expression: keep protein_coding,genes,60616,19944,40672
+assembly,expression: collapse duplicate gene symbols (mean),genes,19944,19938,6
+assembly,expression: drop zero-variance genes,genes,19938,19516,422
+assembly,expression: drop bottom 50% by variance,genes,19516,9758,9758
+assembly,450k manifest probes,probes,486428,486428,0
+assembly,manifest: drop chrX/chrY probes,probes,486428,474780,11648
+assembly,manifest: probes with a RefGene annotation,probes,356119,356119,0
+assembly,"manifest: promoter-associated probes (1stExon,5'UTR,TSS1500,TSS200)",probes,356119,192998,163121
+assembly,methylation: probes in file,probes,486427,192998,293429
+assembly,methylation: keep primary tumour (sample type 01),aliquots,893,791,102
+assembly,methylation: collapse aliquots to one per patient,aliquots,791,784,7
+assembly,methylation: drop probes with >10% NA,probes,192998,166054,26944
+assembly,methylation: drop samples with >10% NA,patients,784,784,0
+assembly,methylation: aggregate promoter probes to gene mean beta,genes,181896,19146,162750
+assembly,methylation: drop bottom 50% by variance,genes,19146,9573,9573
+assembly,patients with a usable label,patients,1091,1091,0
+assembly,patients with expression,patients,1095,1095,0
+assembly,patients with methylation,patients,784,784,0
+assembly,INTERSECT expression AND methylation (labels optional),patients,1095,777,318
+assembly,genes shared by both modalities,genes,5669,5669,0

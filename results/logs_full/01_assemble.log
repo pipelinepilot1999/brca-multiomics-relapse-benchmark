@@ -1,0 +1,72 @@
+2026-08-31 18:36:49,674 | INFO    | 01_assemble | ======================================================================
+2026-08-31 18:36:49,675 | INFO    | 01_assemble | start 01_assemble | config=config/config_full.yaml | seed=42
+2026-08-31 18:36:49,743 | INFO    | 01_assemble | FILTER | TCGA-CDR rows (all cancer types)                     |  12591 ->  12591 (dropped 0) [samples]
+2026-08-31 18:36:49,751 | INFO    | 01_assemble | FILTER | restrict to BRCA                                     |  12591 ->   1236 (dropped 11355) [samples]
+2026-08-31 18:36:49,753 | INFO    | 01_assemble | FILTER | drop TCGA-redacted patients                          |   1236 ->   1230 (dropped 6) [samples]
+2026-08-31 18:36:49,759 | INFO    | 01_assemble | FILTER | de-duplicate to one row per patient                  |   1230 ->   1092 (dropped 138) [samples]
+2026-08-31 18:36:49,764 | INFO    | 01_assemble | FILTER | drop patients with missing PFI or PFI.time           |   1092 ->   1091 (dropped 1) [samples]
+2026-08-31 18:36:49,767 | INFO    | 01_assemble | label rule at 1095 days: pos=89 neg=416 excluded_early_censor=586
+2026-08-31 18:36:49,767 | INFO    | 01_assemble | COUNT  | RETAINED censored-before-1095d patients for unsupervised use |    586 [patients]
+2026-08-31 18:36:49,768 | INFO    | 01_assemble | COUNT  | positives (relapse <= 5y)                            |     89 [patients]
+2026-08-31 18:36:49,768 | INFO    | 01_assemble | COUNT  | negatives (relapse-free through 5y)                  |    416 [patients]
+2026-08-31 18:36:54,888 | INFO    | 01_assemble | GENCODE: 60660 genes, 19962 protein_coding
+2026-08-31 18:36:54,891 | INFO    | 01_assemble | reading expression matrix (this takes a minute)...
+2026-08-31 18:37:20,210 | INFO    | 01_assemble | FILTER | expression: raw genes                                |  60660 ->  60660 (dropped 0) [genes]
+2026-08-31 18:37:20,210 | INFO    | 01_assemble | FILTER | expression: raw samples (aliquots)                   |   1226 ->   1226 (dropped 0) [aliquots]
+2026-08-31 18:37:20,211 | INFO    | 01_assemble | FILTER | expression: keep primary tumour (sample type 01)     |   1226 ->   1106 (dropped 120) [aliquots]
+2026-08-31 18:37:20,300 | INFO    | 01_assemble | expression: 11 patients have >1 aliquot; keeping first by sorted barcode
+2026-08-31 18:37:20,301 | INFO    | 01_assemble |    multi-aliquot example TCGA-AC-A3OD -> ['TCGA-AC-A3OD-01A', 'TCGA-AC-A3OD-01B']
+2026-08-31 18:37:20,301 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A26J -> ['TCGA-A7-A26J-01A', 'TCGA-A7-A26J-01B']
+2026-08-31 18:37:20,301 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A0DC -> ['TCGA-A7-A0DC-01A', 'TCGA-A7-A0DC-01B']
+2026-08-31 18:37:20,302 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A0DB -> ['TCGA-A7-A0DB-01A', 'TCGA-A7-A0DB-01C']
+2026-08-31 18:37:20,302 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A13D -> ['TCGA-A7-A13D-01A', 'TCGA-A7-A13D-01B']
+2026-08-31 18:37:20,302 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A13E -> ['TCGA-A7-A13E-01A', 'TCGA-A7-A13E-01B']
+2026-08-31 18:37:20,302 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A26E -> ['TCGA-A7-A26E-01A', 'TCGA-A7-A26E-01B']
+2026-08-31 18:37:20,303 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A26I -> ['TCGA-A7-A26I-01A', 'TCGA-A7-A26I-01B']
+2026-08-31 18:37:20,303 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A13G -> ['TCGA-A7-A13G-01A', 'TCGA-A7-A13G-01B']
+2026-08-31 18:37:20,303 | INFO    | 01_assemble |    multi-aliquot example TCGA-A7-A26F -> ['TCGA-A7-A26F-01A', 'TCGA-A7-A26F-01B']
+2026-08-31 18:37:20,304 | INFO    | 01_assemble | FILTER | expression: collapse aliquots to one per patient     |   1106 ->   1095 (dropped 11) [aliquots]
+2026-08-31 18:37:20,407 | INFO    | 01_assemble | FILTER | expression: drop chrY PAR_Y duplicate accessions     |  60660 ->  60616 (dropped 44) [genes]
+2026-08-31 18:37:20,742 | INFO    | 01_assemble | FILTER | expression: genes mappable to GENCODE v36            |  60616 ->  60616 (dropped 0) [genes]
+2026-08-31 18:37:20,917 | INFO    | 01_assemble | FILTER | expression: keep protein_coding                      |  60616 ->  19944 (dropped 40672) [genes]
+2026-08-31 18:37:21,424 | INFO    | 01_assemble | FILTER | expression: collapse duplicate gene symbols (mean)   |  19944 ->  19938 (dropped 6) [genes]
+2026-08-31 18:37:21,666 | INFO    | 01_assemble | FILTER | expression: drop zero-variance genes                 |  19938 ->  19516 (dropped 422) [genes]
+2026-08-31 18:37:22,080 | INFO    | 01_assemble | FILTER | expression: drop bottom 50% by variance              |  19516 ->   9758 (dropped 9758) [genes]
+2026-08-31 18:37:22,081 | INFO    | 01_assemble | expression matrix ready: 9758 genes x 1095 patients
+2026-08-31 18:37:22,086 | INFO    | 01_assemble | expression value range: min=0.000 max=22.746 (expect log2(count+1))
+2026-08-31 18:37:25,264 | INFO    | 01_assemble | FILTER | 450k manifest probes                                 | 486428 -> 486428 (dropped 0) [probes]
+2026-08-31 18:37:25,303 | INFO    | 01_assemble | FILTER | manifest: drop chrX/chrY probes                      | 486428 -> 474780 (dropped 11648) [probes]
+2026-08-31 18:37:25,372 | INFO    | 01_assemble | FILTER | manifest: probes with a RefGene annotation           | 356119 -> 356119 (dropped 0) [probes]
+2026-08-31 18:37:25,940 | INFO    | 01_assemble | promoter probe->gene pairs: 210986 (192998 unique probes, 20058 unique genes)
+2026-08-31 18:37:26,058 | INFO    | 01_assemble | FILTER | manifest: promoter-associated probes (1stExon,5'UTR,TSS1500,TSS200) | 356119 -> 192998 (dropped 163121) [probes]
+2026-08-31 18:37:26,133 | INFO    | 01_assemble | streaming methylation matrix, keeping 192998 promoter probes...
+2026-08-31 18:37:32,212 | INFO    | 01_assemble |   ... 20000 probes scanned, 7963 kept
+2026-08-31 18:38:01,519 | INFO    | 01_assemble |   ... 120000 probes scanned, 47719 kept
+2026-08-31 18:38:30,751 | INFO    | 01_assemble |   ... 220000 probes scanned, 87630 kept
+2026-08-31 18:38:59,857 | INFO    | 01_assemble |   ... 320000 probes scanned, 127219 kept
+2026-08-31 18:39:29,528 | INFO    | 01_assemble |   ... 420000 probes scanned, 167846 kept
+2026-08-31 18:39:49,029 | INFO    | 01_assemble | FILTER | methylation: probes in file                          | 486427 -> 192998 (dropped 293429) [probes]
+2026-08-31 18:39:49,029 | INFO    | 01_assemble | FILTER | methylation: keep primary tumour (sample type 01)    |    893 ->    791 (dropped 102) [aliquots]
+2026-08-31 18:39:49,207 | INFO    | 01_assemble | FILTER | methylation: collapse aliquots to one per patient    |    791 ->    784 (dropped 7) [aliquots]
+2026-08-31 18:39:49,860 | INFO    | 01_assemble | FILTER | methylation: drop probes with >10% NA                | 192998 -> 166054 (dropped 26944) [probes]
+2026-08-31 18:39:50,153 | INFO    | 01_assemble | FILTER | methylation: drop samples with >10% NA               |    784 ->    784 (dropped 0) [patients]
+2026-08-31 18:39:50,296 | INFO    | 01_assemble | methylation: imputing 395933 residual NA cells (0.3041%) with probe mean
+2026-08-31 18:48:42,914 | INFO    | 01_assemble | methylation: 181896 promoter probes aggregated to 19146 genes
+2026-08-31 18:48:42,914 | INFO    | 01_assemble | FILTER | methylation: aggregate promoter probes to gene mean beta | 181896 ->  19146 (dropped 162750) [genes]
+2026-08-31 18:48:43,140 | INFO    | 01_assemble | FILTER | methylation: drop bottom 50% by variance             |  19146 ->   9573 (dropped 9573) [genes]
+2026-08-31 18:48:43,146 | INFO    | 01_assemble | methylation beta range: min=0.007 max=0.990 (expect 0-1)
+2026-08-31 18:48:43,173 | INFO    | 01_assemble | patients: labels=1091 expression=1095 methylation=784
+2026-08-31 18:48:43,173 | INFO    | 01_assemble | COUNT  | patients with a usable label                         |   1091 [patients]
+2026-08-31 18:48:43,173 | INFO    | 01_assemble | COUNT  | patients with expression                             |   1095 [patients]
+2026-08-31 18:48:43,173 | INFO    | 01_assemble | COUNT  | patients with methylation                            |    784 [patients]
+2026-08-31 18:48:43,173 | INFO    | 01_assemble | FILTER | INTERSECT expression AND methylation (labels optional) |   1095 ->    777 (dropped 318) [patients]
+2026-08-31 18:48:43,202 | INFO    | 01_assemble | gene space: expression=9758 methylation=9573 shared=5669
+2026-08-31 18:48:43,203 | INFO    | 01_assemble | COUNT  | genes shared by both modalities                      |   5669 [genes]
+2026-08-31 18:48:43,227 | INFO    | 01_assemble | PAM50 available for 777 / 777 patients
+2026-08-31 18:48:43,227 | INFO    | 01_assemble | clinical age   : 777/777 present (0.0% missing)
+2026-08-31 18:48:43,228 | INFO    | 01_assemble | clinical stage : 766/777 present (1.4% missing)
+2026-08-31 18:48:43,228 | INFO    | 01_assemble | clinical grade : 0/777 present (100.0% missing)
+2026-08-31 18:48:45,772 | INFO    | 01_assemble | wrote processed matrices to data/processed_full
+2026-08-31 18:48:45,774 | INFO    | 01_assemble | wrote results/tables_full/gate1_filtering.csv  shape=(34, 6)
+2026-08-31 18:48:45,777 | INFO    | 01_assemble | wrote results/tables_full/gate1_summary.json
+2026-08-31 18:48:45,777 | INFO    | 01_assemble | GATE 1 SUMMARY: n=777  pos=68 (8.8%)  neg=299  expr_feats=9758  meth_feats=9573

@@ -231,6 +231,81 @@ substantially re-deriving infiltration, not discovering novel relapse biology.
 
 ---
 
+## Unsupervised multi-omics representation learning (Phase 10)
+
+The supervised pipeline is bottlenecked by n=367, because the landmark rule
+discards every patient censored before the horizon. **An autoencoder needs no
+labels**, so it trains on every patient with both assays — **777 instead of 367,
+a 2.1× increase**. The label bottleneck simply does not bind on the
+unsupervised half.
+
+**Architecture** — denoising multi-modal autoencoder: separate encoders for
+expression and methylation (4,000 highest-variance features each) → 256-unit
+hidden layers → concatenated → **30 shared latent factors** → two decoders
+reconstructing each modality. Loss is summed reconstruction MSE; inputs are
+corrupted with Gaussian noise; early stopping on a held-out *reconstruction*
+split (no labels anywhere in training).
+
+### Result 1 — learned factors beat raw features
+
+| Representation | Features | AUC |
+|---|---|---|
+| Raw expression + methylation (logistic) | 19,331 | 0.616 |
+| Raw expression + methylation (XGBoost) | 19,331 | 0.637 |
+| **AE latent factors (logistic)** | **30** | **0.664** |
+
+Compressing 19,331 measurements into 30 learned factors **improved** AUC. This
+is the clearest evidence in the project that the raw feature space is dominated
+by noise, and that unsupervised integration extracts real structure from it.
+
+### Result 2 — transduction did not inflate anything
+
+Training one encoder on all 777 patients and then cross-validating on its
+embeddings is *transductive*: the encoder saw the **features** (never the labels)
+of patients who later appear in test folds. Reporting only that number would
+overstate the result, so the encoder was **also refit inside each fold** on
+training patients only, excluding that fold's test patients entirely:
+
+| Encoder | AUC (identical 10 folds) |
+|---|---|
+| Transductive (fit once on all 777) | 0.6651 |
+| Fold-safe (refit per fold, test patients excluded) | 0.6697 |
+| **Transduction gap** | **−0.005** |
+
+The gap is essentially zero — the transductive result was not inflated. This is
+the check that makes the unsupervised numbers trustworthy.
+
+### Result 3 — the factors are immune biology, rediscovered
+
+Latent factors correlate strongly with MCP-counter cell populations (|r| up to
+0.46: endothelial cells, CD8 T cells, fibroblasts, monocytic lineage) but
+**barely at all with stage** (|r| ≤ 0.12). The autoencoder, given no labels and
+no immune annotation, independently recovered the same immune/stromal axis that
+Gate 6 found by an entirely different route. That convergence is strong evidence
+the axis is real — and it also explains why the factors do not add to stage:
+they encode a *different*, weaker signal.
+
+### Result 4 — it still does not beat clinical
+
+| Model | AUC | vs clinical |
+|---|---|---|
+| Clinical only | 0.7776 | — |
+| AE latent only | 0.6640 | −0.114 (p = 4.1e-11) |
+| **AE latent + clinical** | **0.7810** | **+0.003 (p = 0.68, n.s.)** |
+| AE latent + clinical (fold-safe, 10 folds) | 0.7914 | wide CI [0.732, 0.851] |
+
+Adding 30 learned multi-omics factors to age + stage + PAM50 improves AUC by
+**+0.003, which is not significant**. The fold-safe variant reaches 0.7914 — the
+highest number in the project — but on only 10 folds with a CI wide enough to
+include no effect, so it is reported, not claimed.
+
+**Conclusion.** Representation learning substantially improves the *omics* story
+(0.637 → 0.664 with 640× fewer features) and is methodologically clean, but it
+does not overturn the headline: clinical stage remains the dominant predictor,
+and multi-omics adds no significant increment on top of it.
+
+---
+
 ## Reproduce it
 
 ### Smoke test — the fast path (no download, ~50 s)

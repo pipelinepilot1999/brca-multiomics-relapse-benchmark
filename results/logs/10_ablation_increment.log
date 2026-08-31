@@ -1,0 +1,19 @@
+2026-08-31 09:47:42,234 | INFO    | 10_ablation_increment | ======================================================================
+2026-08-31 09:47:42,234 | INFO    | 10_ablation_increment | start 10_ablation_increment | config=config/config.yaml | seed=42
+2026-08-31 09:47:43,207 | INFO    | 10_ablation_increment | clinical: keeping 'age' (0.0% missing, median-imputed)
+2026-08-31 09:47:43,208 | INFO    | 10_ablation_increment | clinical: keeping 'stage' (2.7% missing, median-imputed)
+2026-08-31 09:47:43,208 | INFO    | 10_ablation_increment | clinical: dropping 'grade' (100% missing)
+2026-08-31 09:47:43,209 | INFO    | 10_ablation_increment | clinical: keeping PAM50 one-hot (5 levels, 0.0% unknown)
+2026-08-31 09:47:43,224 | INFO    | 10_ablation_increment | reusing 50 existing outer folds from cv_folds.json
+2026-08-31 09:47:43,224 | INFO    | 10_ablation_increment | ==================================================================
+2026-08-31 09:47:43,224 | INFO    | 10_ablation_increment | PART 1 -- ABLATION: does each omics block earn its place?
+2026-08-31 09:47:43,224 | INFO    | 10_ablation_increment | ==================================================================
+2026-08-31 09:47:45,643 | INFO    | 10_ablation_increment |   clinical                           logreg_l2  AUC=0.7776 [0.7615,0.7938]  AP=0.5429  (7 features)
+2026-08-31 09:47:48,918 | INFO    | 10_ablation_increment |   clinical                           xgboost    AUC=0.7422 [0.7254,0.7590]  AP=0.4907  (7 features)
+2026-08-31 09:48:11,375 | INFO    | 10_ablation_increment |   expression                         logreg_l2  AUC=0.6143 [0.5944,0.6341]  AP=0.2964  (9758 features)
+2026-08-31 09:51:44,148 | INFO    | 10_ablation_increment |   expression                         xgboost    AUC=0.6378 [0.6180,0.6577]  AP=0.3176  (9758 features)
+2026-08-31 09:52:06,221 | INFO    | 10_ablation_increment |   methylation                        logreg_l2  AUC=0.6095 [0.5868,0.6321]  AP=0.2905  (9573 features)
+2026-08-31 09:57:14,826 | INFO    | 10_ablation_increment |   methylation                        xgboost    AUC=0.5946 [0.5725,0.6167]  AP=0.2738  (9573 features)
+2026-08-31 09:57:53,103 | INFO    | 10_ablation_increment |   expression+methylation             logreg_l2  AUC=0.6158 [0.5959,0.6356]  AP=0.3034  (19331 features)
+2026-08-31 10:02:21,214 | INFO    | 10_ablation_increment |   expression+methylation             xgboost    AUC=0.6365 [0.6171,0.6560]  AP=0.3132  (19331 features)
+2026-08-31 10:02:43,409 | INFO    | 10_ablation_increment |   clinical+expression                logreg_l2  AUC=0.6504 [0.6319,0.6688]  AP=0.3328  (9765 features)

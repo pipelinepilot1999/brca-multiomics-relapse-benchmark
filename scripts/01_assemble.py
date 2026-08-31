@@ -58,7 +58,7 @@ def load_gencode(path: Path, log) -> pd.DataFrame:
 # --------------------------------------------------------------------------- #
 # labels
 # --------------------------------------------------------------------------- #
-def build_labels(cfg, log, flog: FilterLog) -> pd.DataFrame:
+def build_labels(cfg, log, flog: FilterLog, keep_unlabeled: bool = False) -> pd.DataFrame:
     root = repo_root()
     cdr = pd.read_csv(root / cfg["files"]["tcga_cdr"], sep="\t", low_memory=False)
     flog.step("TCGA-CDR rows (all cancer types)", len(cdr), len(cdr))
@@ -95,8 +95,15 @@ def build_labels(cfg, log, flog: FilterLog) -> pd.DataFrame:
     log.info("label rule at %d days: pos=%d neg=%d excluded_early_censor=%d",
              h, int(positive.sum()), int(negative.sum()), n_excl)
 
-    lab = brca[brca["label"] >= 0].copy()
-    flog.step(f"EXCLUDE censored before {h}d (status unknown)", len(brca), len(lab))
+    if keep_unlabeled:
+        # Unsupervised mode: retain every patient, label -1 marks "status unknown".
+        # The autoencoder never sees labels, so these patients are usable for it.
+        lab = brca.copy()
+        flog.note(f"RETAINED censored-before-{h}d patients for unsupervised use",
+                  int((brca["label"] == -1).sum()), "patients")
+    else:
+        lab = brca[brca["label"] >= 0].copy()
+        flog.step(f"EXCLUDE censored before {h}d (status unknown)", len(brca), len(lab))
     flog.note("positives (relapse <= 5y)", int((lab["label"] == 1).sum()), "patients")
     flog.note("negatives (relapse-free through 5y)", int((lab["label"] == 0).sum()), "patients")
 
@@ -360,6 +367,9 @@ def main() -> None:
     ap.add_argument("--config", required=True)
     ap.add_argument("--subset-patients", type=int, default=0,
                     help="smoke-test mode: cap the cohort at N patients")
+    ap.add_argument("--include-unlabeled", action="store_true",
+                    help="keep every patient with both modalities (label -1 = unknown). "
+                         "For unsupervised representation learning, which needs no labels.")
     args = ap.parse_args()
 
     cfg = load_config(args.config)
@@ -368,7 +378,7 @@ def main() -> None:
     root = repo_root()
     flog = FilterLog(log, "assembly")
 
-    labels = build_labels(cfg, log, flog)
+    labels = build_labels(cfg, log, flog, keep_unlabeled=args.include_unlabeled)
     ann = load_gencode(root / cfg["files"]["gencode_gtf"], log)
     expr = build_expression(cfg, ann, log, flog)
     pmap = load_promoter_map(cfg, log, flog)
@@ -382,9 +392,14 @@ def main() -> None:
     flog.note("patients with expression", len(e_p), "patients")
     flog.note("patients with methylation", len(m_p), "patients")
 
-    final = sorted(lab_p & e_p & m_p)
-    flog.step("INTERSECT label AND expression AND methylation",
-              len(lab_p), len(final), "patients")
+    if args.include_unlabeled:
+        final = sorted(e_p & m_p & lab_p)   # lab_p now spans all patients incl. label -1
+        flog.step("INTERSECT expression AND methylation (labels optional)",
+                  len(e_p), len(final), "patients")
+    else:
+        final = sorted(lab_p & e_p & m_p)
+        flog.step("INTERSECT label AND expression AND methylation",
+                  len(lab_p), len(final), "patients")
 
     if args.subset_patients:
         rng = np.random.default_rng(cfg["seed"])
@@ -440,7 +455,7 @@ def main() -> None:
     log.info("GATE 1 SUMMARY: n=%d  pos=%d (%.1f%%)  neg=%d  expr_feats=%d  meth_feats=%d",
              n, n_pos, 100 * prev, n_neg, expr.shape[1], met.shape[1])
 
-    if not args.subset_patients:
+    if not args.subset_patients and not args.include_unlabeled:
         if n < 400:
             flag(log, f"final n={n} is under 400. Spec says stop: consider a 3-year horizon.")
         if n_pos < 60:
