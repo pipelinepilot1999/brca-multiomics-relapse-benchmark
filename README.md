@@ -1,8 +1,20 @@
-# Multi-Omics Biomarker Signature for Breast Cancer Relapse
+# Multi-Omics Predictive Modelling for Breast Cancer Relapse
 
-Predictive modelling and biomarker signature development on TCGA-BRCA RNA-seq and
-DNA methylation, benchmarked against a clinical baseline and externally tested in
-METABRIC.
+### Benchmarking transcriptomic and epigenomic signatures against clinical staging, with external validation and unsupervised representation learning
+
+**TCGA-BRCA discovery (n = 367 labelled / 777 with matched assays) → METABRIC external validation (n = 1,902)**
+
+A pre-specified, leakage-controlled benchmark asking whether RNA-seq and DNA
+methylation add prognostic value over the clinical variables already recorded at
+diagnosis. **They do not.** The pipeline, the negative result, and the
+diagnostics that establish it are all reproducible from this repository — the
+full analysis runs offline on a bundled fixture in under a minute.
+
+> **A note on the title.** An earlier version of this project was called
+> *"Multi-Omics Biomarker Signature for Breast Cancer Relapse."* The ablation in
+> Phase 9 showed methylation contributes +0.0015 AUC over expression alone, and
+> that no omics combination adds incremental value over clinical staging. The
+> title was changed to match the evidence rather than the ambition.
 
 ---
 
@@ -498,6 +510,31 @@ in-sample TCGA AUC of 1.000 — is labelled as such wherever it appears.
   so the clinical baseline is thinner than specified.
 - **immunedeconv/quanTIseq not run** — see the deconvolution section.
 - **Single-cohort discovery**; no multi-cohort discovery or meta-analysis.
+
+---
+
+## Data provenance and citation
+
+All data is **public, de-identified and open-access**. Raw files are downloaded
+by `scripts/download_data.sh` and never committed; the 13 MB `data/smoke/`
+fixture contains a subsample redistributed under the terms of its original
+sources.
+
+| Source | Reference |
+|---|---|
+| TCGA-BRCA expression, methylation, clinical | The Cancer Genome Atlas Network. *Nature* 490, 61–70 (2012). Accessed via UCSC Xena GDC hub. |
+| TCGA-CDR curated endpoints (PFI) | Liu J. *et al.* An Integrated TCGA Pan-Cancer Clinical Data Resource. *Cell* 173, 400–416 (2018). |
+| METABRIC expression + RFS | Curtis C. *et al.* *Nature* 486, 346–352 (2012); Pereira B. *et al.* *Nat Commun* 7, 11479 (2016). Accessed via cBioPortal. |
+| Illumina 450k manifest | Illumina HumanMethylation450 v1.2, via NCBI GEO platform GPL13534. |
+| GENCODE v36 | Frankish A. *et al.* *Nucleic Acids Res* 47, D766–D773 (2019). |
+| MSigDB Hallmark + Reactome | Liberzon A. *et al.* *Cell Syst* 1, 417–425 (2015); via Enrichr/gseapy. |
+| MCP-counter markers | Becht E. *et al.* *Genome Biol* 17, 218 (2016). |
+| P-NET architecture | Elmarakeby H. *et al.* *Nature* 598, 348–352 (2021). |
+
+Exact URLs, file sizes, shapes and md5 checksums for every input are recorded in
+`results/tables/gate0_data_manifest.csv`.
+
+Code is MIT licensed (see `LICENSE`). Data retains the licence of its source.
 
 ## Reproducibility
 

@@ -1,3 +1,3 @@
-2026-08-31 20:09:51,074 | INFO    | 09_report | ======================================================================
-2026-08-31 20:09:51,074 | INFO    | 09_report | start 09_report | config=config/config.yaml | seed=42
-2026-08-31 20:09:51,920 | INFO    | 09_report | wrote /home/ec2-user/biomarker-signature-brca/results/biomarker_signature_report_3-year.pdf (0.72 MB)
+2026-08-31 20:35:57,868 | INFO    | 09_report | ======================================================================
+2026-08-31 20:35:57,868 | INFO    | 09_report | start 09_report | config=config/config.yaml | seed=42
+2026-08-31 20:35:58,698 | INFO    | 09_report | wrote /home/ec2-user/biomarker-signature-brca/results/biomarker_signature_report_3-year.pdf (0.72 MB)

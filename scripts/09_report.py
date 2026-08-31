@@ -121,8 +121,8 @@ def build(cfg, log):
 
     # ---------------- title ----------------
     story += [Spacer(1, 30 * mm),
-              Paragraph("Multi-Omics Biomarker Signature for Breast Cancer Relapse", s["TitleBig"]),
-              Paragraph(f"TCGA-BRCA discovery, METABRIC external validation &middot; "
+              Paragraph("Multi-Omics Predictive Modelling for Breast Cancer Relapse", s["TitleBig"]),
+              Paragraph(f"Benchmarking against clinical staging, with external validation &middot; "
                         f"{hy:.0f}-year relapse endpoint<br/>"
                         f"Generated {datetime.now():%Y-%m-%d %H:%M} &middot; seed {cfg['seed']}",
                         s["Sub"])]
@@ -602,7 +602,7 @@ def build(cfg, log):
     doc = SimpleDocTemplate(str(out), pagesize=A4,
                             leftMargin=22 * mm, rightMargin=22 * mm,
                             topMargin=18 * mm, bottomMargin=18 * mm,
-                            title="Multi-Omics Biomarker Signature for Breast Cancer Relapse")
+                            title="Multi-Omics Predictive Modelling for Breast Cancer Relapse")
 
     def footer(canvas, doc_):
         canvas.saveState()
