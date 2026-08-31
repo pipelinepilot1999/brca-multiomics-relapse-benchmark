@@ -1,10 +1,10 @@
-2026-08-31 08:19:40,254 | INFO    | 08_figures | ======================================================================
-2026-08-31 08:19:40,254 | INFO    | 08_figures | start 08_figures | config=config/config_5y.yaml | seed=42
-2026-08-31 08:19:40,563 | INFO    | 08_figures | wrote results/figures_5y/fig2_model_comparison.png
-2026-08-31 08:19:40,692 | INFO    | 08_figures | wrote results/figures_5y/fig3_roc_oof.png
-2026-08-31 08:19:40,969 | INFO    | 08_figures | wrote results/figures_5y/fig4_shap_top30.png
-2026-08-31 08:19:41,178 | INFO    | 08_figures | wrote results/figures_5y/fig5_panel_size_curve.png
-2026-08-31 08:19:41,383 | INFO    | 08_figures | wrote results/figures_5y/fig6_immune_deconvolution.png
-2026-08-31 08:19:41,812 | INFO    | 08_figures | wrote results/figures_5y/fig7_kaplan_meier.png
-2026-08-31 08:19:42,006 | INFO    | 08_figures | wrote results/figures_5y/fig8_metabric_validation.png
-2026-08-31 08:19:42,006 | INFO    | 08_figures | figures complete
+2026-08-31 09:19:40,027 | INFO    | 08_figures | ======================================================================
+2026-08-31 09:19:40,027 | INFO    | 08_figures | start 08_figures | config=config/config_5y.yaml | seed=42
+2026-08-31 09:19:40,351 | INFO    | 08_figures | wrote results/figures_5y/fig2_model_comparison.png
+2026-08-31 09:19:40,496 | INFO    | 08_figures | wrote results/figures_5y/fig3_roc_oof.png
+2026-08-31 09:19:40,806 | INFO    | 08_figures | wrote results/figures_5y/fig4_shap_top30.png
+2026-08-31 09:19:41,040 | INFO    | 08_figures | wrote results/figures_5y/fig5_panel_size_curve.png
+2026-08-31 09:19:41,261 | INFO    | 08_figures | wrote results/figures_5y/fig6_immune_deconvolution.png
+2026-08-31 09:19:41,739 | INFO    | 08_figures | wrote results/figures_5y/fig7_kaplan_meier.png
+2026-08-31 09:19:41,954 | INFO    | 08_figures | wrote results/figures_5y/fig8_metabric_validation.png
+2026-08-31 09:19:41,954 | INFO    | 08_figures | figures complete

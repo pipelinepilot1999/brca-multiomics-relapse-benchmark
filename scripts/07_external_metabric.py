@@ -131,7 +131,7 @@ def main() -> None:
              len(y_mb), y_mb.sum(), 100 * y_mb.mean())
 
     results, mapping_rows = [], []
-    best_scores = None
+    all_scores = {}          # (panel, model) -> METABRIC risk scores
     for N in sizes:
         p = panels[panels["panel_size"] == N]
         expr_genes = sorted(set(p[p["block"] == "expr"]["gene"]))
@@ -180,8 +180,7 @@ def main() -> None:
                      "optimistic by construction)",
                      mname, row["metabric_auc"], row["metabric_ap"],
                      row["tcga_in_sample_auc"])
-            if N == 50 and mname == "xgboost":
-                best_scores = s_mb
+            all_scores[(N, mname)] = s_mb
 
     res = pd.DataFrame(results)
     save_table(res, cfg, "gate7_metabric_performance.csv", log)
@@ -189,13 +188,42 @@ def main() -> None:
     save_table(flog.to_frame(), cfg, "gate7_metabric_filtering.csv", log)
 
     # ---------- Kaplan-Meier ----------
+    # Log-rank is computed for EVERY panel/model config, not one hardcoded choice:
+    # picking a single config in advance would have tied the survival conclusion to
+    # whichever model happened to be selected, independent of how well it transfers.
     km_out = {}
-    if best_scores is not None:
+    km_rows = []
+    for (N, mname), sc in all_scores.items():
+        grp_ = (sc > np.median(sc)).astype(int)
+        try:
+            _, p_, stat_ = km_curve(mb_lab["time_days"].values,
+                                    mb_lab["event"].astype(int).values, grp_, "MB", log)
+        except Exception:  # noqa: BLE001
+            continue
+        auc_ = float(res[(res.panel_size == N) & (res.model == mname)]["metabric_auc"].iloc[0])
+        km_rows.append({"panel_size": N, "model": mname, "metabric_auc": auc_,
+                        "logrank_p": p_, "logrank_stat": stat_})
+    if km_rows:
+        kmdf = pd.DataFrame(km_rows).sort_values("metabric_auc", ascending=False)
+        save_table(kmdf, cfg, "gate7_metabric_km_all_configs.csv", log)
+        log.info("METABRIC log-rank across all configs (best-transferring first):")
+        for _, x in kmdf.iterrows():
+            log.info("   panel %4d %-10s AUC=%.4f  log-rank p=%.4g %s",
+                     x["panel_size"], x["model"], x["metabric_auc"], x["logrank_p"],
+                     "*" if x["logrank_p"] < 0.05 else "")
+
+        # headline KM uses the BEST-TRANSFERRING config, chosen by AUC
+        top = kmdf.iloc[0]
+        best_scores = all_scores[(int(top["panel_size"]), top["model"])]
         grp = (best_scores > np.median(best_scores)).astype(int)
         curves, p, stat = km_curve(mb_lab["time_days"].values,
                                    mb_lab["event"].astype(int).values, grp, "METABRIC", log)
-        km_out["metabric"] = {"groups": curves, "logrank_p": p, "logrank_stat": stat}
-        log.info("METABRIC KM (50-marker panel, median split): log-rank p=%.3g", p)
+        km_out["metabric"] = {"groups": curves, "logrank_p": p, "logrank_stat": stat,
+                              "panel_size": int(top["panel_size"]), "model": top["model"],
+                              "metabric_auc": float(top["metabric_auc"])}
+        log.info("METABRIC KM headline (best-transferring: panel %d %s, AUC %.4f): "
+                 "log-rank p=%.4g", top["panel_size"], top["model"],
+                 top["metabric_auc"], p)
         pd.DataFrame({"patient": mb_lab.index, "time_days": mb_lab["time_days"],
                       "event": mb_lab["event"].astype(int), "risk_score": best_scores,
                       "risk_group": grp, "label": y_mb}) \

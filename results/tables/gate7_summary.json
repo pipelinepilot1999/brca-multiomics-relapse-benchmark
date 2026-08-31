@@ -10,17 +10,20 @@
       "groups": {
         "0": {
           "n": 951,
-          "events": 401,
-          "median_survival": 6489.275
+          "events": 364,
+          "median_survival": 7818.3791666666775
         },
         "1": {
           "n": 951,
-          "events": 402,
-          "median_survival": 7678.366666666677
+          "events": 439,
+          "median_survival": 5782.110416666677
         }
       },
-      "logrank_p": 0.6857150051016916,
-      "logrank_stat": 0.1637634144195533
+      "logrank_p": 4.6820361497543345e-06,
+      "logrank_stat": 20.963147263610306,
+      "panel_size": 20,
+      "model": "logreg_l2",
+      "metabric_auc": 0.6321
     },
     "tcga": {
       "groups": {

@@ -19,12 +19,13 @@ features reached **AUC 0.669** [0.648–0.690], and a pathway-informed neural ne
 (paired t p = 3.0e-11; XGBoost won only 8 of 50 folds) and 0.166 over the neural
 network (p = 9.2e-18; won 2 of 50 folds). A reduced 250-marker panel recovered
 AUC 0.687, still below the clinical baseline. In external validation the
-expression component transferred poorly (best METABRIC AUC 0.632, most
-configurations 0.48–0.59), and the risk-group separation that was highly
-significant in TCGA (log-rank p = 1.8e-4) **did not replicate** in METABRIC
-(p = 0.69). The honest headline is a negative result: **at this sample size,
-adding ~19,000 omics features did not improve on a two-variable clinical model,
-and the resulting signature did not validate externally.**
+expression component transferred weakly but real: best METABRIC AUC 0.632
+(most configurations 0.48–0.59), and the best-transferring model **did**
+separate risk groups in METABRIC (log-rank p = 4.7e-06, against p = 1.8e-4 in
+TCGA). The honest headline is therefore mixed: **at this sample size, adding
+~19,000 omics features did not improve on a two-variable clinical model** — but
+the reduced expression panel does carry genuine, externally reproducible
+prognostic signal, just weaker than the clinical variables already available.
 
 ---
 
@@ -166,16 +167,35 @@ it memorises the training cohort completely, and transfers at ~0.56. Second, the
 best external result (0.632) comes from the *smallest* panel with the *linear*
 model, which is what one expects when most of the signal is noise.
 
-Kaplan–Meier by predicted risk group:
+Kaplan–Meier by predicted risk group. Log-rank is computed for **every**
+panel/model configuration rather than one chosen in advance — tying the survival
+conclusion to a single pre-picked model would make it an artifact of that choice:
 
-- **TCGA** (out-of-fold risk): log-rank **p = 1.8e-4** — clear separation.
-- **METABRIC** (external): log-rank **p = 0.69** — **no separation. The result
-  does not replicate.**
+| Panel | Model | METABRIC AUC | log-rank p |
+|---|---|---|---|
+| **20** | **logreg L2** | **0.632** | **4.7e-06** |
+| 250 | XGBoost | 0.585 | 3.5e-03 |
+| 500 | XGBoost | 0.568 | 2.0e-03 |
+| 100 | XGBoost | 0.579 | 4.6e-02 |
+| 50 | XGBoost | 0.558 | 0.69 |
+| 20 | XGBoost | 0.558 | 0.27 |
+| 100 | logreg L2 | 0.533 | 0.63 |
+| 50 | logreg L2 | 0.531 | 0.82 |
+| 250 | logreg L2 | 0.522 | 0.42 |
+| 500 | logreg L2 | 0.481 | 0.82 |
 
-Cross-platform RNA-seq → microarray transfer degrades performance independently of
-biology, so this confounds signature quality with platform shift. But a drop from
-p = 0.0002 to p = 0.69 is not a modest degradation; the external validation
-failed, and that is the finding.
+- **TCGA** (out-of-fold risk): log-rank **p = 1.8e-4**.
+- **METABRIC** (external, best-transferring model): log-rank **p = 4.7e-06** —
+  **the separation does replicate.** The 5-year sensitivity run agrees
+  (p = 1.3e-05).
+
+Note the tight coupling between transfer AUC and log-rank significance: the four
+configurations that clear AUC 0.567 all separate survival, and every
+configuration at or below AUC 0.558 does not. That coherence is reassuring — it
+means the surviving signal is a property of the model's discrimination, not a
+lucky split. Cross-platform RNA-seq → microarray transfer still degrades
+performance independently of biology, so AUC 0.63 externally versus 0.67
+internally confounds signature quality with platform shift.
 
 ---
 
@@ -317,8 +337,10 @@ in-sample TCGA AUC of 1.000 — is labelled as such wherever it appears.
 - **The early-censoring rule discards 61% of labelled patients** and leaves a
   selected cohort in which stage is unusually predictive.
 - **The signature is unstable** — most top-ranked markers appear in <20% of folds.
-- **External validation failed** (KM p = 0.69 in METABRIC). The signature should
-  not be described as validated.
+- **External discrimination is weak** (METABRIC AUC 0.632 vs 0.669 internally),
+  even though risk-group separation replicates (p = 4.7e-06). The signature is
+  externally *reproducible* but not externally *strong*, and it is still beaten
+  by stage alone.
 - **Only expression was externally testable**; a multi-omics signature validated on
   one modality is partially validated at best.
 - **Cross-platform transfer** confounds signature quality with platform shift.
