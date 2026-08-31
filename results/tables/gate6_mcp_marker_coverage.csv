@@ -1,0 +1,11 @@
+population,markers_in_signature,markers_found,coverage,missing
+Endothelial cells,33,25,0.758,ACVRL1;BCL6B;C;ESAM;PGF;ROBO4;SHANK3;TIE1
+Myeloid dendritic cells,6,5,0.833,WFDC21P
+Monocytic lineage,7,6,0.857,ADAP2
+Neutrophils,15,13,0.867,TECPR2;TLE3
+T cells,16,14,0.875,CHRM3-AS2;MGC40069
+B lineage,9,8,0.889,IGKC
+NK cells,9,8,0.889,KIR3DS1
+CD8 T cells,1,1,1.0,
+Fibroblasts,8,8,1.0,
+Cytotoxic lymphocytes,7,7,1.0,

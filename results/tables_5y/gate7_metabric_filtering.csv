@@ -1,0 +1,9 @@
+stage,step,unit,n_in,n_out,n_dropped
+metabric,METABRIC expression rows,probes/genes,20603,20603,0
+metabric,METABRIC: collapse duplicate symbols (mean),genes,20384,20384,0
+metabric,METABRIC clinical rows,patients,2509,2509,0
+metabric,METABRIC: drop missing RFS status/months,patients,2509,2380,129
+metabric,METABRIC: EXCLUDE censored before 1825d,patients,2380,2185,195
+metabric,METABRIC positives,patients,604,604,0
+metabric,METABRIC negatives,patients,1581,1581,0
+metabric,METABRIC: patients with expression AND a usable label,patients,2185,1835,350

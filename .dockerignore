@@ -1,0 +1,8 @@
+data/
+results/
+.git/
+**/__pycache__/
+*.pyc
+data_smoke/
+results_smoke/
+.venv/

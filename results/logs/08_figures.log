@@ -1,0 +1,11 @@
+2026-08-31 08:19:33,508 | INFO    | 08_figures | ======================================================================
+2026-08-31 08:19:33,508 | INFO    | 08_figures | start 08_figures | config=config/config.yaml | seed=42
+2026-08-31 08:19:33,775 | INFO    | 08_figures | wrote results/figures/fig1_horizon_sensitivity.png
+2026-08-31 08:19:34,069 | INFO    | 08_figures | wrote results/figures/fig2_model_comparison.png
+2026-08-31 08:19:34,196 | INFO    | 08_figures | wrote results/figures/fig3_roc_oof.png
+2026-08-31 08:19:34,462 | INFO    | 08_figures | wrote results/figures/fig4_shap_top30.png
+2026-08-31 08:19:34,745 | INFO    | 08_figures | wrote results/figures/fig5_panel_size_curve.png
+2026-08-31 08:19:34,870 | INFO    | 08_figures | wrote results/figures/fig6_immune_deconvolution.png
+2026-08-31 08:19:35,300 | INFO    | 08_figures | wrote results/figures/fig7_kaplan_meier.png
+2026-08-31 08:19:35,508 | INFO    | 08_figures | wrote results/figures/fig8_metabric_validation.png
+2026-08-31 08:19:35,509 | INFO    | 08_figures | figures complete

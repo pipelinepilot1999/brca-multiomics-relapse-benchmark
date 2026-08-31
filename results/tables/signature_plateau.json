@@ -1,0 +1,10 @@
+{
+  "plateau_panel_size": 100,
+  "best_panel_size": 250,
+  "best_auc": 0.6874,
+  "panel_50_composition": {
+    "expr": 31,
+    "meth": 17,
+    "clin": 2
+  }
+}

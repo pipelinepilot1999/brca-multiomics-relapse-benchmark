@@ -1,0 +1,14 @@
+{
+  "model": "C_pnet_pathway_nn",
+  "n_folds": 50,
+  "auc_mean": 0.6133,
+  "auc_sd": 0.0727,
+  "auc_ci_lo": 0.5931,
+  "auc_ci_hi": 0.6334,
+  "ap_mean": 0.3083,
+  "ap_sd": 0.0731,
+  "ap_ci_lo": 0.2881,
+  "ap_ci_hi": 0.3286,
+  "mean_epochs": 24.6,
+  "mean_pathways": 232
+}

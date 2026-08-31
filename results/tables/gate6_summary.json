@@ -1,0 +1,13 @@
+{
+  "risk_model": "B",
+  "risk_model_auc": 0.6691,
+  "median_split": 0.11218257,
+  "n_high_risk": 183,
+  "n_low_risk": 184,
+  "relapse_rate_high": 0.2787,
+  "relapse_rate_low": 0.0924,
+  "n_significant_fdr05": 6,
+  "n_significant_immune": 4,
+  "verdict": "The signature separates risk groups that ALSO differ in immune infiltration -- it is at least partly an immune readout.",
+  "method": "MCP-counter (Becht 2016) reimplemented in Python; see module docstring for why immunedeconv/R was not used"
+}

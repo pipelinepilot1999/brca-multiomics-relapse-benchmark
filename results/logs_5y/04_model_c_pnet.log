@@ -1,0 +1,21 @@
+2026-08-31 06:46:07,416 | INFO    | 04_model_c_pnet | ======================================================================
+2026-08-31 06:46:07,416 | INFO    | 04_model_c_pnet | start 04_model_c_pnet | config=config/config_5y.yaml | seed=42
+2026-08-31 06:46:08,379 | INFO    | 04_model_c_pnet | Model C gene space: 5669 genes with expression AND methylation
+2026-08-31 06:46:08,393 | INFO    | 04_model_c_pnet | loaded 50 gene sets from hallmark.gmt
+2026-08-31 06:46:08,406 | INFO    | 04_model_c_pnet | loaded 2100 gene sets from reactome.gmt
+2026-08-31 06:46:08,408 | INFO    | 04_model_c_pnet | reusing 50 existing outer folds from cv_folds.json
+2026-08-31 06:46:08,445 | INFO    | 04_model_c_pnet | pathway mask: 223 pathways x 2000 genes; 1260 genes connected (740 dropped as unannotated), density 0.0139
+2026-08-31 06:46:09,739 | INFO    | 04_model_c_pnet |   fold  1/50 auc=0.650 ap=0.560 epochs=41 pathways=223 genes=1260
+2026-08-31 06:46:13,212 | INFO    | 04_model_c_pnet |   fold  6/50 auc=0.617 ap=0.590 epochs=47 pathways=218 genes=1243
+2026-08-31 06:46:16,695 | INFO    | 04_model_c_pnet |   fold 11/50 auc=0.567 ap=0.427 epochs=43 pathways=225 genes=1261
+2026-08-31 06:46:19,604 | INFO    | 04_model_c_pnet |   fold 16/50 auc=0.521 ap=0.522 epochs=27 pathways=242 genes=1244
+2026-08-31 06:46:22,453 | INFO    | 04_model_c_pnet |   fold 21/50 auc=0.697 ap=0.656 epochs=37 pathways=227 genes=1233
+2026-08-31 06:46:25,202 | INFO    | 04_model_c_pnet |   fold 26/50 auc=0.518 ap=0.445 epochs=39 pathways=239 genes=1289
+2026-08-31 06:46:27,958 | INFO    | 04_model_c_pnet |   fold 31/50 auc=0.607 ap=0.473 epochs=31 pathways=219 genes=1226
+2026-08-31 06:46:30,286 | INFO    | 04_model_c_pnet |   fold 36/50 auc=0.597 ap=0.483 epochs=37 pathways=225 genes=1264
+2026-08-31 06:46:33,007 | INFO    | 04_model_c_pnet |   fold 41/50 auc=0.498 ap=0.389 epochs=39 pathways=215 genes=1236
+2026-08-31 06:46:36,451 | INFO    | 04_model_c_pnet |   fold 46/50 auc=0.600 ap=0.533 epochs=42 pathways=223 genes=1250
+2026-08-31 06:46:38,674 | INFO    | 04_model_c_pnet |   fold 50/50 auc=0.688 ap=0.606 epochs=22 pathways=234 genes=1238
+2026-08-31 06:46:38,677 | INFO    | 04_model_c_pnet | wrote results/tables_5y/model_c_per_fold.csv  shape=(50, 11)
+2026-08-31 06:46:38,680 | INFO    | 04_model_c_pnet | wrote results/tables_5y/model_c_summary.json
+2026-08-31 06:46:38,681 | INFO    | 04_model_c_pnet | GATE 4: Model C AUC = 0.6193 [0.6017, 0.6369]  AP = 0.5378 [0.5165, 0.5591]  (mean 36 epochs to early stop)

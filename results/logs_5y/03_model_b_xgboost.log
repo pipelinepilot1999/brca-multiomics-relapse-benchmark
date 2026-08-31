@@ -1,0 +1,56 @@
+2026-08-31 02:40:58,959 | INFO    | 03_model_b_xgboost | ======================================================================
+2026-08-31 02:40:58,959 | INFO    | 03_model_b_xgboost | start 03_model_b_xgboost | config=config/config_5y.yaml | seed=42
+2026-08-31 02:40:59,914 | INFO    | 03_model_b_xgboost | clinical: keeping 'age' (0.0% missing, median-imputed)
+2026-08-31 02:40:59,914 | INFO    | 03_model_b_xgboost | clinical: keeping 'stage' (3.9% missing, median-imputed)
+2026-08-31 02:40:59,914 | INFO    | 03_model_b_xgboost | clinical: dropping 'grade' (100% missing)
+2026-08-31 02:40:59,916 | INFO    | 03_model_b_xgboost | clinical: keeping PAM50 one-hot (5 levels, 0.0% unknown)
+2026-08-31 02:40:59,951 | INFO    | 03_model_b_xgboost | Model B matrix: 254 patients x 19338 features (clinical=7, expression=9758, methylation=9573)
+2026-08-31 02:40:59,959 | INFO    | 03_model_b_xgboost | reusing 50 existing outer folds from cv_folds.json
+2026-08-31 02:41:54,939 | INFO    | 03_model_b_xgboost |   fold  1/50 auc=0.617 ap=0.498 (inner best 0.577)
+2026-08-31 02:44:59,482 | INFO    | 03_model_b_xgboost |   fold  6/50 auc=0.562 ap=0.558 (inner best 0.690)
+2026-08-31 02:47:57,126 | INFO    | 03_model_b_xgboost |   fold 11/50 auc=0.607 ap=0.447 (inner best 0.662)
+2026-08-31 02:50:51,932 | INFO    | 03_model_b_xgboost |   fold 16/50 auc=0.515 ap=0.536 (inner best 0.629)
+2026-08-31 02:54:59,815 | INFO    | 03_model_b_xgboost |   fold 21/50 auc=0.743 ap=0.711 (inner best 0.604)
+2026-08-31 02:58:14,698 | INFO    | 03_model_b_xgboost |   fold 26/50 auc=0.543 ap=0.468 (inner best 0.704)
+2026-08-31 03:01:28,571 | INFO    | 03_model_b_xgboost |   fold 31/50 auc=0.645 ap=0.519 (inner best 0.683)
+2026-08-31 03:04:45,987 | INFO    | 03_model_b_xgboost |   fold 36/50 auc=0.618 ap=0.484 (inner best 0.701)
+2026-08-31 03:07:55,257 | INFO    | 03_model_b_xgboost |   fold 41/50 auc=0.538 ap=0.429 (inner best 0.594)
+2026-08-31 03:11:09,724 | INFO    | 03_model_b_xgboost |   fold 46/50 auc=0.646 ap=0.597 (inner best 0.640)
+2026-08-31 03:13:26,813 | INFO    | 03_model_b_xgboost |   fold 50/50 auc=0.646 ap=0.586 (inner best 0.580)
+2026-08-31 03:13:26,816 | INFO    | 03_model_b_xgboost | wrote results/tables_5y/model_b_per_fold.csv  shape=(50, 8)
+2026-08-31 03:13:26,817 | INFO    | 03_model_b_xgboost | wrote results/tables_5y/model_b_best_params.csv  shape=(50, 8)
+2026-08-31 03:13:26,819 | INFO    | 03_model_b_xgboost | wrote results/tables_5y/model_b_summary.json
+2026-08-31 03:13:26,821 | INFO    | 03_model_b_xgboost | wrote model_b_oof_predictions.csv
+2026-08-31 03:13:26,866 | INFO    | 03_model_b_xgboost | wrote results/tables_5y/model_b_shap_ranking.csv  shape=(19338, 5)
+2026-08-31 03:13:26,866 | INFO    | 03_model_b_xgboost | GATE 3: Model B AUC = 0.6255 [0.6082, 0.6428]  AP = 0.5453 [0.5244, 0.5663]
+2026-08-31 03:13:26,866 | INFO    | 03_model_b_xgboost | top 30 features by mean |SHAP|:
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    expr:TSPYL5                  expression   shap=0.28418  selected in 2% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    meth:CCL7                    methylation  shap=0.20168  selected in 90% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    meth:ZNF135                  methylation  shap=0.18444  selected in 2% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    expr:EPHA5                   expression   shap=0.17001  selected in 2% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    meth:SLC22A16                methylation  shap=0.16565  selected in 2% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    expr:SCG2                    expression   shap=0.10705  selected in 42% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    meth:A2M                     methylation  shap=0.10588  selected in 2% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    meth:EMCN                    methylation  shap=0.10314  selected in 6% of folds
+2026-08-31 03:13:26,867 | INFO    | 03_model_b_xgboost |    meth:MIR1295                 methylation  shap=0.10214  selected in 2% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:VENTX                   expression   shap=0.10073  selected in 4% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:RIMBP3                  expression   shap=0.09286  selected in 10% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    meth:GNA15                   methylation  shap=0.09104  selected in 6% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    meth:GRIP1                   methylation  shap=0.08986  selected in 54% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:MSX1                    expression   shap=0.08875  selected in 2% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:CADPS                   expression   shap=0.08745  selected in 32% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:CDK5R1                  expression   shap=0.08727  selected in 78% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:C5orf63                 expression   shap=0.08585  selected in 2% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:SAMD11                  expression   shap=0.08570  selected in 16% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    expr:LRRC43                  expression   shap=0.08214  selected in 2% of folds
+2026-08-31 03:13:26,868 | INFO    | 03_model_b_xgboost |    meth:ZNF257                  methylation  shap=0.08179  selected in 6% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    expr:CCDC83                  expression   shap=0.08062  selected in 2% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    expr:GRIK2                   expression   shap=0.08054  selected in 36% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    meth:KCNK1                   methylation  shap=0.07920  selected in 100% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    meth:MIR135A1                methylation  shap=0.07392  selected in 10% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    meth:LILRA1                  methylation  shap=0.07245  selected in 4% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    meth:LXN                     methylation  shap=0.07163  selected in 8% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    expr:ANKRD18B                expression   shap=0.06980  selected in 2% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    meth:FLJ40504                methylation  shap=0.06873  selected in 52% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    expr:H2BU1                   expression   shap=0.06837  selected in 24% of folds
+2026-08-31 03:13:26,869 | INFO    | 03_model_b_xgboost |    meth:NTS                     methylation  shap=0.06815  selected in 2% of folds

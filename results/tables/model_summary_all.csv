@@ -1,0 +1,4 @@
+model,n_folds,auc_mean,auc_sd,auc_ci_lo,auc_ci_hi,ap_mean,ap_sd,ap_ci_lo,ap_ci_hi,features,n_features,n_features_total,select_k,mean_epochs,mean_pathways
+A_clinical,50,0.7788,0.0617,0.7617,0.7959,0.546,0.1092,0.5157,0.5762,age;stage;pam50_Basal;pam50_Her2;pam50_LumA;pam50_LumB;pam50_Normal,7.0,,,,
+B_xgboost_multiomics,50,0.6691,0.0758,0.6481,0.6901,0.3637,0.0917,0.3383,0.3891,,,19338.0,2000.0,,
+C_pnet_pathway_nn,50,0.6133,0.0727,0.5931,0.6334,0.3083,0.0731,0.2881,0.3286,,,,,24.6,232.0

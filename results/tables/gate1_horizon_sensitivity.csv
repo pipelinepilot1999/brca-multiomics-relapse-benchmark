@@ -1,0 +1,5 @@
+horizon_days,horizon_years,n_usable,n_positive,n_negative,positive_rate,n_excluded_early_censor,pct_excluded,meets_n_ge_400,meets_pos_ge_60,prevalence_in_15_25_band
+730,2.0,460,49,411,0.1065,317,40.8,True,False,False
+1095,3.0,367,68,299,0.1853,410,52.8,False,True,True
+1460,4.0,297,80,217,0.2694,480,61.8,False,True,False
+1825,5.0,254,94,160,0.3701,523,67.3,False,True,False

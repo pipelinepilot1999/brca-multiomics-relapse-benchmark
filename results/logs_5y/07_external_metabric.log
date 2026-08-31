@@ -1,0 +1,36 @@
+2026-08-31 06:53:16,960 | INFO    | 07_external_metabric | ======================================================================
+2026-08-31 06:53:16,960 | INFO    | 07_external_metabric | start 07_external_metabric | config=config/config_5y.yaml | seed=42
+2026-08-31 06:53:17,871 | INFO    | 07_external_metabric | signature panels available: [20, 50, 100, 250, 500]
+2026-08-31 06:53:17,871 | INFO    | 07_external_metabric | reading METABRIC expression...
+2026-08-31 06:53:27,555 | INFO    | 07_external_metabric | FILTER | METABRIC expression rows                             |  20603 ->  20603 (dropped 0) [probes/genes]
+2026-08-31 06:53:28,823 | INFO    | 07_external_metabric | FILTER | METABRIC: collapse duplicate symbols (mean)          |  20384 ->  20384 (dropped 0) [genes]
+2026-08-31 06:53:28,824 | INFO    | 07_external_metabric | METABRIC expression: 1980 samples x 20384 genes
+2026-08-31 06:53:28,834 | INFO    | 07_external_metabric | FILTER | METABRIC clinical rows                               |   2509 ->   2509 (dropped 0) [patients]
+2026-08-31 06:53:28,838 | INFO    | 07_external_metabric | FILTER | METABRIC: drop missing RFS status/months             |   2509 ->   2380 (dropped 129) [patients]
+2026-08-31 06:53:28,840 | INFO    | 07_external_metabric | METABRIC label at 1825d: pos=604 neg=1581 excluded_early_censor=195
+2026-08-31 06:53:28,841 | INFO    | 07_external_metabric | FILTER | METABRIC: EXCLUDE censored before 1825d              |   2380 ->   2185 (dropped 195) [patients]
+2026-08-31 06:53:28,841 | INFO    | 07_external_metabric | COUNT  | METABRIC positives                                   |    604 [patients]
+2026-08-31 06:53:28,841 | INFO    | 07_external_metabric | COUNT  | METABRIC negatives                                   |   1581 [patients]
+2026-08-31 06:53:29,212 | INFO    | 07_external_metabric | FILTER | METABRIC: patients with expression AND a usable label |   2185 ->   1835 (dropped 350) [patients]
+2026-08-31 06:53:29,307 | INFO    | 07_external_metabric | METABRIC validation cohort: n=1835, positives=495 (27.0%)
+2026-08-31 06:53:29,312 | INFO    | 07_external_metabric | panel   20: 4 expression markers, 4 map to METABRIC (100%); 15 methylation markers CANNOT be tested externally
+2026-08-31 06:53:29,312 | WARNING | 07_external_metabric |   panel 20: too few mapped genes to model
+2026-08-31 06:53:29,313 | INFO    | 07_external_metabric | panel   50: 9 expression markers, 9 map to METABRIC (100%); 40 methylation markers CANNOT be tested externally
+2026-08-31 06:53:29,402 | INFO    | 07_external_metabric |    xgboost    METABRIC AUC=0.5817 AP=0.3381  (TCGA in-sample 1.0000, optimistic by construction)
+2026-08-31 06:53:29,411 | INFO    | 07_external_metabric |    logreg_l2  METABRIC AUC=0.6165 AP=0.3544  (TCGA in-sample 0.8016, optimistic by construction)
+2026-08-31 06:53:29,412 | INFO    | 07_external_metabric | panel  100: 27 expression markers, 26 map to METABRIC (96%); 72 methylation markers CANNOT be tested externally
+2026-08-31 06:53:29,526 | INFO    | 07_external_metabric |    xgboost    METABRIC AUC=0.5704 AP=0.3395  (TCGA in-sample 1.0000, optimistic by construction)
+2026-08-31 06:53:29,532 | INFO    | 07_external_metabric |    logreg_l2  METABRIC AUC=0.5783 AP=0.3311  (TCGA in-sample 0.8287, optimistic by construction)
+2026-08-31 06:53:29,533 | INFO    | 07_external_metabric | panel  250: 80 expression markers, 77 map to METABRIC (96%); 169 methylation markers CANNOT be tested externally
+2026-08-31 06:53:29,758 | INFO    | 07_external_metabric |    xgboost    METABRIC AUC=0.6109 AP=0.3620  (TCGA in-sample 1.0000, optimistic by construction)
+2026-08-31 06:53:29,770 | INFO    | 07_external_metabric |    logreg_l2  METABRIC AUC=0.5733 AP=0.3184  (TCGA in-sample 0.9231, optimistic by construction)
+2026-08-31 06:53:29,773 | INFO    | 07_external_metabric | panel  500: 186 expression markers, 179 map to METABRIC (96%); 313 methylation markers CANNOT be tested externally
+2026-08-31 06:53:30,219 | INFO    | 07_external_metabric |    xgboost    METABRIC AUC=0.6046 AP=0.3559  (TCGA in-sample 1.0000, optimistic by construction)
+2026-08-31 06:53:30,228 | INFO    | 07_external_metabric |    logreg_l2  METABRIC AUC=0.5590 AP=0.3002  (TCGA in-sample 0.9868, optimistic by construction)
+2026-08-31 06:53:30,231 | INFO    | 07_external_metabric | wrote results/tables_5y/gate7_metabric_performance.csv  shape=(8, 6)
+2026-08-31 06:53:30,233 | INFO    | 07_external_metabric | wrote results/tables_5y/gate7_gene_mapping.csv  shape=(5, 6)
+2026-08-31 06:53:30,234 | INFO    | 07_external_metabric | wrote results/tables_5y/gate7_metabric_filtering.csv  shape=(8, 6)
+2026-08-31 06:53:30,290 | INFO    | 07_external_metabric | METABRIC KM (50-marker panel, median split): log-rank p=0.0026
+2026-08-31 06:53:30,344 | INFO    | 07_external_metabric | TCGA KM (out-of-fold Model B risk, median split): log-rank p=0.0213
+2026-08-31 06:53:30,346 | INFO    | 07_external_metabric | wrote results/tables_5y/gate7_summary.json
+2026-08-31 06:53:30,346 | INFO    | 07_external_metabric | GATE 7: best METABRIC AUC = 0.6165 (panel 50, logreg_l2)

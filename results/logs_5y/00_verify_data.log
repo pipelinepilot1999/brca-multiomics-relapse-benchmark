@@ -1,0 +1,16 @@
+2026-08-31 01:11:29,703 | INFO    | 00_verify_data | ======================================================================
+2026-08-31 01:11:29,703 | INFO    | 00_verify_data | start 00_verify_data | config=config/config_5y.yaml | seed=42
+2026-08-31 01:11:32,887 | INFO    | 00_verify_data | tcga_expression    138.5 MB   rows=60660     cols=1227   TCGA-BRCA.star_counts.tsv.gz
+2026-08-31 01:12:17,240 | INFO    | 00_verify_data | tcga_methylation   2.99 GB    rows=486427    cols=894    TCGA-BRCA.methylation450.tsv.gz
+2026-08-31 01:12:17,248 | INFO    | 00_verify_data | tcga_clinical      0.3 MB     rows=1255      cols=85     TCGA-BRCA.clinical.tsv.gz
+2026-08-31 01:12:17,248 | INFO    | 00_verify_data | tcga_survival      0.0 MB     rows=1232      cols=4      TCGA-BRCA.survival.tsv.gz
+2026-08-31 01:12:17,255 | INFO    | 00_verify_data | tcga_cdr           2.4 MB     rows=12591     cols=34     TCGA-CDR_Survival_S1.tsv
+2026-08-31 01:12:17,258 | INFO    | 00_verify_data | tcga_subtype       0.0 MB     rows=7734      cols=9      TCGASubtype.20170308.tsv.gz
+2026-08-31 01:12:18,642 | INFO    | 00_verify_data | methyl_manifest    64.0 MB    rows=486428    cols=33     GPL13534_450k_manifest.csv.gz
+2026-08-31 01:12:18,642 | INFO    | 00_verify_data | mcp_genes          0.0 MB     rows=111       cols=4      MCPcounter_genes.txt
+2026-08-31 01:12:21,907 | INFO    | 00_verify_data | gencode_gtf        44.5 MB    rows=3014859   cols=1      gencode.v36.annotation.gtf.gz
+2026-08-31 01:12:22,236 | INFO    | 00_verify_data | metabric_expr      689.3 MB   rows=20603     cols=1982   metabric_data_mrna_illumina_microarray.txt
+2026-08-31 01:12:22,237 | INFO    | 00_verify_data | metabric_patient   0.4 MB     rows=2513      cols=24     metabric_data_clinical_patient.txt
+2026-08-31 01:12:22,238 | INFO    | 00_verify_data | metabric_sample    0.3 MB     rows=2513      cols=13     metabric_data_clinical_sample.txt
+2026-08-31 01:12:22,241 | INFO    | 00_verify_data | wrote results/tables_5y/gate0_data_manifest.csv  shape=(12, 10)
+2026-08-31 01:12:22,241 | INFO    | 00_verify_data | GATE 0 PASS: 12 files present, 3.93 GB total

@@ -1,0 +1,12 @@
+{
+  "n_final": 254,
+  "n_positive": 94,
+  "n_negative": 160,
+  "positive_rate": 0.3701,
+  "n_excluded_early_censoring": 744,
+  "n_expression_features": 9758,
+  "n_methylation_features": 9573,
+  "n_shared_genes": 5669,
+  "horizon_days": 1825,
+  "seed": 42
+}

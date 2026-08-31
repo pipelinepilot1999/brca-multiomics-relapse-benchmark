@@ -1,0 +1,14 @@
+# Raw data is downloaded, never committed (3.9 GB)
+data/raw/
+data/processed/
+data/processed_5y/
+data/interim/
+data_smoke/
+results_smoke/
+work/
+.nextflow/
+.nextflow.log*
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/

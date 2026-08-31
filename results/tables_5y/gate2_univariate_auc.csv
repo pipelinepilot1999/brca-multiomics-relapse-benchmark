@@ -1,0 +1,8 @@
+feature,auc,direction
+stage,0.6757,higher=relapse
+age,0.5929,higher=relapse
+pam50_LumA,0.5688,higher=relapse-free
+pam50_Basal,0.5495,higher=relapse
+pam50_Normal,0.5188,higher=relapse
+pam50_Her2,0.5091,higher=relapse
+pam50_LumB,0.5086,higher=relapse-free

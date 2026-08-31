@@ -1,0 +1,9 @@
+2026-08-31 08:19:31,015 | INFO    | compare_models | ======================================================================
+2026-08-31 08:19:31,015 | INFO    | compare_models | start compare_models | config=config/config.yaml | seed=42
+2026-08-31 08:19:31,021 | INFO    | compare_models | wrote results/tables/model_summary_all.csv  shape=(3, 16)
+2026-08-31 08:19:31,027 | INFO    | compare_models | A vs B : mean AUC diff -0.1098 (B better on 8/50 folds), paired t p=2.99e-11, wilcoxon p=1.02e-10
+2026-08-31 08:19:31,032 | INFO    | compare_models | A vs C : mean AUC diff -0.1656 (C better on 2/50 folds), paired t p=9.18e-18, wilcoxon p=1.24e-14
+2026-08-31 08:19:31,036 | INFO    | compare_models | B vs C : mean AUC diff -0.0558 (C better on 4/50 folds), paired t p=8.17e-11, wilcoxon p=2.81e-10
+2026-08-31 08:19:31,038 | INFO    | compare_models | wrote results/tables/model_comparison_tests.csv  shape=(3, 8)
+2026-08-31 08:19:31,041 | WARNING | compare_models | HEADLINE: the clinical baseline (A, AUC 0.7788) OUTPERFORMS the multi-omics model (B, AUC 0.6691). Reported as found.
+2026-08-31 08:19:31,042 | INFO    | compare_models | comparison complete

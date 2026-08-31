@@ -1,0 +1,9 @@
+panel_size,model,n_genes_used,metabric_auc,metabric_ap,tcga_in_sample_auc
+50,xgboost,9,0.5817,0.3381,1.0
+50,logreg_l2,9,0.6165,0.3544,0.8016
+100,xgboost,26,0.5704,0.3395,1.0
+100,logreg_l2,26,0.5783,0.3311,0.8287
+250,xgboost,77,0.6109,0.362,1.0
+250,logreg_l2,77,0.5733,0.3184,0.9231
+500,xgboost,179,0.6046,0.3559,1.0
+500,logreg_l2,179,0.559,0.3002,0.9868

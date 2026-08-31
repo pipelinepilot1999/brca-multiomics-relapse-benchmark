@@ -1,0 +1,36 @@
+2026-08-31 01:41:42,832 | INFO    | 02b_baseline_diagnostics | ======================================================================
+2026-08-31 01:41:42,832 | INFO    | 02b_baseline_diagnostics | start 02b_baseline_diagnostics | config=config/config_5y.yaml | seed=42
+2026-08-31 01:41:43,776 | INFO    | 02b_baseline_diagnostics | reusing 50 existing outer folds from cv_folds.json
+2026-08-31 01:41:43,776 | INFO    | 02b_baseline_diagnostics | clinical: keeping 'age' (0.0% missing, median-imputed)
+2026-08-31 01:41:43,777 | INFO    | 02b_baseline_diagnostics | clinical: keeping 'stage' (3.9% missing, median-imputed)
+2026-08-31 01:41:43,777 | INFO    | 02b_baseline_diagnostics | clinical: dropping 'grade' (100% missing)
+2026-08-31 01:41:43,778 | INFO    | 02b_baseline_diagnostics | clinical: keeping PAM50 one-hot (5 levels, 0.0% unknown)
+2026-08-31 01:41:43,785 | INFO    | 02b_baseline_diagnostics | stage composition vs 3-year relapse label:
+                      label_0  label_1    n  relapse_rate
+stage (-1 = missing)                                     
+-1.0                        4        6   10         0.600
+ 1.0                       33        6   39         0.154
+ 2.0                       88       38  126         0.302
+ 3.0                       35       35   70         0.500
+ 4.0                        0        9    9         1.000
+2026-08-31 01:41:43,787 | INFO    | 02b_baseline_diagnostics | wrote results/tables_5y/gate2_stage_composition.csv  shape=(5, 5)
+2026-08-31 01:41:43,797 | INFO    | 02b_baseline_diagnostics | univariate AUC of each clinical covariate:
+     feature    auc           direction
+       stage 0.6757      higher=relapse
+         age 0.5929      higher=relapse
+  pam50_LumA 0.5688 higher=relapse-free
+ pam50_Basal 0.5495      higher=relapse
+pam50_Normal 0.5188      higher=relapse
+  pam50_Her2 0.5091      higher=relapse
+  pam50_LumB 0.5086 higher=relapse-free
+2026-08-31 01:41:43,798 | INFO    | 02b_baseline_diagnostics | wrote results/tables_5y/gate2_univariate_auc.csv  shape=(7, 3)
+2026-08-31 01:41:44,030 | INFO    | 02b_baseline_diagnostics | A_full (age+stage+PAM50)                   AUC=0.6889 [0.6694, 0.7084]  AP=0.6317  (7 features)
+2026-08-31 01:41:44,254 | INFO    | 02b_baseline_diagnostics | A_no_PAM50 (age+stage only, TRUE clinical) AUC=0.7023 [0.6804, 0.7242]  AP=0.6543  (2 features)
+2026-08-31 01:41:44,479 | INFO    | 02b_baseline_diagnostics | A_PAM50_only                               AUC=0.5501 [0.5330, 0.5672]  AP=0.4106  (5 features)
+2026-08-31 01:41:44,697 | INFO    | 02b_baseline_diagnostics | A_age_only                                 AUC=0.5941 [0.5766, 0.6117]  AP=0.5061  (1 features)
+2026-08-31 01:41:44,917 | INFO    | 02b_baseline_diagnostics | A_stage_only                               AUC=0.6656 [0.6470, 0.6843]  AP=0.5273  (1 features)
+2026-08-31 01:41:44,917 | INFO    | 02b_baseline_diagnostics | stage IV at diagnosis: 9 patients, 9 of them relapse-positive
+2026-08-31 01:41:45,149 | INFO    | 02b_baseline_diagnostics | A_full_excl_stageIV                        AUC=0.6537 [0.6338, 0.6737]  AP=0.5554  (7 features)
+2026-08-31 01:41:45,373 | INFO    | 02b_baseline_diagnostics | A_no_PAM50_excl_stageIV                    AUC=0.6684 [0.6461, 0.6908]  AP=0.5810  (2 features)
+2026-08-31 01:41:45,374 | INFO    | 02b_baseline_diagnostics | wrote results/tables_5y/gate2_baseline_variants.csv  shape=(7, 10)
+2026-08-31 01:41:45,374 | INFO    | 02b_baseline_diagnostics | GATE 2 DIAGNOSTIC COMPLETE -- see gate2_baseline_variants.csv

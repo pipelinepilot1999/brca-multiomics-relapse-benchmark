@@ -1,0 +1,20 @@
+2026-08-31 01:38:14,898 | INFO    | 02_model_a_clinical | ======================================================================
+2026-08-31 01:38:14,899 | INFO    | 02_model_a_clinical | start 02_model_a_clinical | config=config/config.yaml | seed=42
+2026-08-31 01:38:15,831 | INFO    | 02_model_a_clinical | cohort: n=367, positives=68 (18.5%)
+2026-08-31 01:38:15,832 | INFO    | 02_model_a_clinical | clinical: keeping 'age' (0.0% missing, median-imputed)
+2026-08-31 01:38:15,832 | INFO    | 02_model_a_clinical | clinical: keeping 'stage' (2.7% missing, median-imputed)
+2026-08-31 01:38:15,832 | INFO    | 02_model_a_clinical | clinical: dropping 'grade' (100% missing)
+2026-08-31 01:38:15,833 | INFO    | 02_model_a_clinical | clinical: keeping PAM50 one-hot (5 levels, 0.0% unknown)
+2026-08-31 01:38:15,834 | INFO    | 02_model_a_clinical | Model A design matrix: 367 patients x 7 clinical features: ['age', 'stage', 'pam50_Basal', 'pam50_Her2', 'pam50_LumA', 'pam50_LumB', 'pam50_Normal']
+2026-08-31 01:38:15,846 | INFO    | 02_model_a_clinical | generated 50 outer folds (5-fold x 10 repeats), wrote cv_folds.json
+2026-08-31 01:38:15,853 | INFO    | 02_model_a_clinical |   fold  1/50 auc=0.704 ap=0.354
+2026-08-31 01:38:15,903 | INFO    | 02_model_a_clinical |   fold 11/50 auc=0.747 ap=0.560
+2026-08-31 01:38:15,952 | INFO    | 02_model_a_clinical |   fold 21/50 auc=0.723 ap=0.455
+2026-08-31 01:38:16,001 | INFO    | 02_model_a_clinical |   fold 31/50 auc=0.795 ap=0.633
+2026-08-31 01:38:16,049 | INFO    | 02_model_a_clinical |   fold 41/50 auc=0.801 ap=0.602
+2026-08-31 01:38:16,095 | INFO    | 02_model_a_clinical | wrote results/tables/model_a_per_fold.csv  shape=(50, 7)
+2026-08-31 01:38:16,096 | INFO    | 02_model_a_clinical | wrote results/tables/model_a_summary.json
+2026-08-31 01:38:16,096 | INFO    | 02_model_a_clinical | GATE 2: Model A AUC = 0.7788 [0.7617, 0.7959]  AP = 0.5460 [0.5157, 0.5762]  over 50 folds
+2026-08-31 01:38:16,096 | WARNING | 02_model_a_clinical | !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2026-08-31 01:38:16,096 | WARNING | 02_model_a_clinical | FLAG: Model A AUC 0.779 is outside the usual 0.60-0.70 band for clinical-only BRCA relapse models. Worth explaining.
+2026-08-31 01:38:16,096 | WARNING | 02_model_a_clinical | !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

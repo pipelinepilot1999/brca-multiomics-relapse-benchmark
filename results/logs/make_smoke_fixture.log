@@ -1,0 +1,21 @@
+2026-08-31 08:58:34,233 | INFO    | make_smoke_fixture | ======================================================================
+2026-08-31 08:58:34,233 | INFO    | make_smoke_fixture | start make_smoke_fixture | config=config/config.yaml | seed=42
+2026-08-31 08:58:34,251 | INFO    | make_smoke_fixture | smoke cohort: 130 patients (45 pos, 85 neg)
+2026-08-31 08:58:34,307 | INFO    | make_smoke_fixture | CDR subset: 149 rows
+2026-08-31 08:58:50,254 | INFO    | make_smoke_fixture | expression subset: (3000, 131)
+2026-08-31 08:58:55,039 | INFO    | make_smoke_fixture | gencode subset written
+2026-08-31 08:59:44,548 | INFO    | make_smoke_fixture | methylation subset: (6000, 132)
+2026-08-31 08:59:44,579 | INFO    | make_smoke_fixture | manifest subset: 6000 probes
+2026-08-31 08:59:56,130 | INFO    | make_smoke_fixture | METABRIC subset: 3000 genes x 400 samples
+2026-08-31 08:59:56,158 | INFO    | make_smoke_fixture | smoke fixture complete: 23.7 MB in data/smoke
+2026-08-31 08:59:56,158 | INFO    | make_smoke_fixture |    MCPcounter_genes.txt                   0.01 MB
+2026-08-31 08:59:56,158 | INFO    | make_smoke_fixture |    TCGA-CDR_Survival_S1.tsv               0.04 MB
+2026-08-31 08:59:56,158 | INFO    | make_smoke_fixture |    TCGASubtype.subset.tsv.gz              0.00 MB
+2026-08-31 08:59:56,158 | INFO    | make_smoke_fixture |    expression.tsv.gz                      0.72 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    gencode.subset.gtf.gz                  0.09 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    genesets/hallmark.gmt                  0.04 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    genesets/reactome.gmt                  0.82 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    manifest.subset.csv.gz                 0.05 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    metabric_expr.txt                     20.29 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    metabric_patient.txt                   0.08 MB
+2026-08-31 08:59:56,159 | INFO    | make_smoke_fixture |    methylation.tsv.gz                     1.58 MB

@@ -1,0 +1,14 @@
+{
+  "model": "A_clinical",
+  "n_folds": 50,
+  "auc_mean": 0.7788,
+  "auc_sd": 0.0617,
+  "auc_ci_lo": 0.7617,
+  "auc_ci_hi": 0.7959,
+  "ap_mean": 0.546,
+  "ap_sd": 0.1092,
+  "ap_ci_lo": 0.5157,
+  "ap_ci_hi": 0.5762,
+  "features": "age;stage;pam50_Basal;pam50_Her2;pam50_LumA;pam50_LumB;pam50_Normal",
+  "n_features": 7
+}

@@ -1,0 +1,72 @@
+2026-08-31 06:50:14,851 | INFO    | 05_signature_reduction | ======================================================================
+2026-08-31 06:50:14,851 | INFO    | 05_signature_reduction | start 05_signature_reduction | config=config/config_5y.yaml | seed=42
+2026-08-31 06:50:15,768 | INFO    | 05_signature_reduction | clinical: keeping 'age' (0.0% missing, median-imputed)
+2026-08-31 06:50:15,768 | INFO    | 05_signature_reduction | clinical: keeping 'stage' (3.9% missing, median-imputed)
+2026-08-31 06:50:15,768 | INFO    | 05_signature_reduction | clinical: dropping 'grade' (100% missing)
+2026-08-31 06:50:15,770 | INFO    | 05_signature_reduction | clinical: keeping PAM50 one-hot (5 levels, 0.0% unknown)
+2026-08-31 06:50:15,800 | INFO    | 05_signature_reduction | feature pool: 19338
+2026-08-31 06:50:15,800 | INFO    | 05_signature_reduction |   candidate model B: AUC=0.6255
+2026-08-31 06:50:15,800 | INFO    | 05_signature_reduction |   candidate model C: AUC=0.6193
+2026-08-31 06:50:15,800 | INFO    | 05_signature_reduction | best-performing omics model: B (AUC=0.6255)
+2026-08-31 06:50:15,802 | INFO    | 05_signature_reduction | reusing 50 existing outer folds from cv_folds.json
+2026-08-31 06:50:33,132 | INFO    | 05_signature_reduction | panel   20: AUC=0.6458 [0.6262, 0.6655]  AP=0.5478
+2026-08-31 06:50:52,990 | INFO    | 05_signature_reduction | panel   50: AUC=0.6387 [0.6212, 0.6563]  AP=0.5463
+2026-08-31 06:51:17,440 | INFO    | 05_signature_reduction | panel  100: AUC=0.6336 [0.6170, 0.6502]  AP=0.5353
+2026-08-31 06:51:54,019 | INFO    | 05_signature_reduction | panel  250: AUC=0.6336 [0.6156, 0.6515]  AP=0.5429
+2026-08-31 06:52:51,121 | INFO    | 05_signature_reduction | panel  500: AUC=0.6308 [0.6138, 0.6478]  AP=0.5416
+2026-08-31 06:52:51,125 | INFO    | 05_signature_reduction | wrote results/tables_5y/signature_panel_curve.csv  shape=(5, 11)
+2026-08-31 06:52:51,128 | INFO    | 05_signature_reduction | wrote results/tables_5y/signature_panels.csv  shape=(920, 6)
+2026-08-31 06:52:51,129 | INFO    | 05_signature_reduction | GATE 5: best panel = 20 (AUC 0.6458); plateau (within 1 SE) begins at 20 markers
+2026-08-31 06:52:51,129 | INFO    | 05_signature_reduction | 50-marker panel composition: {'meth': 40, 'expr': 9, 'clin': 1}
+2026-08-31 06:52:51,129 | INFO    | 05_signature_reduction | 50-marker panel:
+2026-08-31 06:52:51,129 | INFO    | 05_signature_reduction |     1. stage                    clin         (selected in 100% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     2. MIR1284                  meth         (selected in 100% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     3. MIR570                   meth         (selected in 100% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     4. BGLAP                    meth         (selected in 96% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     5. LIMCH1                   meth         (selected in 92% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     6. HIST1H2BK                meth         (selected in 86% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     7. MIR600                   meth         (selected in 80% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     8. MICALCL                  meth         (selected in 80% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |     9. LOC285045                meth         (selected in 80% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |    10. CCDC89                   meth         (selected in 78% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |    11. DGUOK                    meth         (selected in 64% of folds)
+2026-08-31 06:52:51,130 | INFO    | 05_signature_reduction |    12. ATF7                     meth         (selected in 64% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    13. FLT3                     expr         (selected in 64% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    14. ASAP1IT1                 meth         (selected in 62% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    15. CALML5                   meth         (selected in 58% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    16. AOC2                     meth         (selected in 58% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    17. SSC5D                    meth         (selected in 58% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    18. ZNF710                   meth         (selected in 58% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    19. EIF3G                    meth         (selected in 54% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    20. CLEC9A                   expr         (selected in 54% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    21. SLC38A8                  meth         (selected in 52% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    22. ASIC1                    expr         (selected in 50% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    23. EXPH5                    meth         (selected in 48% of folds)
+2026-08-31 06:52:51,131 | INFO    | 05_signature_reduction |    24. CCDC9B                   expr         (selected in 48% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    25. ATP6V0A4                 meth         (selected in 44% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    26. LRRC2                    expr         (selected in 44% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    27. CAPN13                   meth         (selected in 44% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    28. TNNT2                    meth         (selected in 42% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    29. IL17REL                  meth         (selected in 42% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    30. C14orf49                 meth         (selected in 40% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    31. FAM71F2                  meth         (selected in 36% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    32. C9orf131                 meth         (selected in 36% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    33. MAPK8IP2                 meth         (selected in 36% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    34. BTG2                     expr         (selected in 34% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    35. SPINK7                   meth         (selected in 34% of folds)
+2026-08-31 06:52:51,132 | INFO    | 05_signature_reduction |    36. GHRL                     meth         (selected in 32% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    37. ACSF2                    expr         (selected in 32% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    38. QPRT                     meth         (selected in 32% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    39. AVIL                     meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    40. ABCA1                    meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    41. SNORA71B                 meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    42. CLRN1OS                  meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    43. RCOR2                    expr         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    44. LEF1                     expr         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    45. NDUFB6                   meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    46. LOC730755                meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    47. SPRED2                   meth         (selected in 30% of folds)
+2026-08-31 06:52:51,133 | INFO    | 05_signature_reduction |    48. F10                      meth         (selected in 28% of folds)
+2026-08-31 06:52:51,134 | INFO    | 05_signature_reduction |    49. A2ML1                    meth         (selected in 28% of folds)
+2026-08-31 06:52:51,134 | INFO    | 05_signature_reduction |    50. RNASE6                   meth         (selected in 28% of folds)
+2026-08-31 06:52:51,134 | INFO    | 05_signature_reduction | wrote results/tables_5y/signature_plateau.json

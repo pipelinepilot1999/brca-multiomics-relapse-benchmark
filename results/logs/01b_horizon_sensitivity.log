@@ -1,0 +1,10 @@
+2026-08-31 01:22:49,110 | INFO    | 01b_horizon_sensitivity | ======================================================================
+2026-08-31 01:22:49,110 | INFO    | 01b_horizon_sensitivity | start 01b_horizon_sensitivity | config=config/config.yaml | seed=42
+2026-08-31 01:22:49,113 | INFO    | 01b_horizon_sensitivity | patient universe: expression=1095 methylation=784 both=782
+2026-08-31 01:22:49,170 | INFO    | 01b_horizon_sensitivity | patients with PFI AND expression AND methylation: 777
+2026-08-31 01:22:49,170 | INFO    | 01b_horizon_sensitivity | horizon  730d (2.0y): n=460 pos= 49 (10.7%) neg=411 excluded=317 (41%)
+2026-08-31 01:22:49,170 | INFO    | 01b_horizon_sensitivity | horizon 1095d (3.0y): n=367 pos= 68 (18.5%) neg=299 excluded=410 (53%)
+2026-08-31 01:22:49,170 | INFO    | 01b_horizon_sensitivity | horizon 1460d (4.0y): n=297 pos= 80 (26.9%) neg=217 excluded=480 (62%)
+2026-08-31 01:22:49,170 | INFO    | 01b_horizon_sensitivity | horizon 1825d (5.0y): n=254 pos= 94 (37.0%) neg=160 excluded=523 (67%)
+2026-08-31 01:22:49,172 | INFO    | 01b_horizon_sensitivity | wrote results/tables/gate1_horizon_sensitivity.csv  shape=(4, 11)
+2026-08-31 01:22:49,173 | WARNING | 01b_horizon_sensitivity | NO horizon meets both spec floors (n>=400, pos>=60) with matched expression+methylation. The multi-omics intersection is the binding constraint, not the horizon.

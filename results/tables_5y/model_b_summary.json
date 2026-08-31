@@ -1,0 +1,14 @@
+{
+  "model": "B_xgboost_multiomics",
+  "n_folds": 50,
+  "auc_mean": 0.6255,
+  "auc_sd": 0.0624,
+  "auc_ci_lo": 0.6082,
+  "auc_ci_hi": 0.6428,
+  "ap_mean": 0.5453,
+  "ap_sd": 0.0755,
+  "ap_ci_lo": 0.5244,
+  "ap_ci_hi": 0.5663,
+  "n_features_total": 19338,
+  "select_k": 2000
+}

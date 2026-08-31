@@ -1,0 +1,34 @@
+2026-08-31 06:52:56,507 | INFO    | 06_immune_deconv | ======================================================================
+2026-08-31 06:52:56,507 | INFO    | 06_immune_deconv | start 06_immune_deconv | config=config/config_5y.yaml | seed=42
+2026-08-31 06:52:57,521 | INFO    | 06_immune_deconv | MCP-counter signature: 111 markers, 10 populations
+2026-08-31 06:52:57,533 | INFO    | 06_immune_deconv | MCP-counter marker coverage:
+             population  markers_in_signature  markers_found  coverage
+      Endothelial cells                    33             25     0.758
+Myeloid dendritic cells                     6              5     0.833
+      Monocytic lineage                     7              6     0.857
+            Neutrophils                    15             13     0.867
+                T cells                    16             14     0.875
+              B lineage                     9              8     0.889
+               NK cells                     9              8     0.889
+            CD8 T cells                     1              1     1.000
+            Fibroblasts                     8              8     1.000
+  Cytotoxic lymphocytes                     7              7     1.000
+2026-08-31 06:52:57,534 | INFO    | 06_immune_deconv | wrote results/tables_5y/gate6_mcp_marker_coverage.csv  shape=(10, 5)
+2026-08-31 06:52:57,537 | INFO    | 06_immune_deconv | wrote results/tables_5y/gate6_mcp_scores.csv  shape=(254, 11)
+2026-08-31 06:52:57,537 | INFO    | 06_immune_deconv | risk groups taken from Model B (outer-fold AUC 0.6255)
+2026-08-31 06:52:57,542 | INFO    | 06_immune_deconv | median split at risk=0.3445: high-risk n=127, low-risk n=127
+2026-08-31 06:52:57,543 | INFO    | 06_immune_deconv | observed relapse rate: high-risk 44.1%, low-risk 29.9%
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv | wrote results/tables_5y/gate6_risk_vs_immune.csv  shape=(10, 9)
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv | GATE 6 -- MCP-counter scores, high vs low predicted risk (Mann-Whitney U, BH-FDR):
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    Endothelial cells        delta=-0.511  rbc=-0.284  p=8.91e-05  FDR=0.000891 *
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    Myeloid dendritic cells  delta=-0.864  rbc=-0.261  p=0.000322  FDR=0.00161 *
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    B lineage                delta=-0.876  rbc=-0.249  p=0.000615  FDR=0.00205 *
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    NK cells                 delta=-0.521  rbc=-0.237  p=0.00108  FDR=0.0027 *
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    Cytotoxic lymphocytes    delta=-0.500  rbc=-0.215  p=0.00309  FDR=0.00551 *
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    Neutrophils              delta=-0.320  rbc=-0.213  p=0.0033  FDR=0.00551 *
+2026-08-31 06:52:57,553 | INFO    | 06_immune_deconv |    T cells                  delta=-0.588  rbc=-0.208  p=0.00418  FDR=0.00597 *
+2026-08-31 06:52:57,554 | INFO    | 06_immune_deconv |    CD8 T cells              delta=-0.556  rbc=-0.169  p=0.0204  FDR=0.0254 *
+2026-08-31 06:52:57,554 | INFO    | 06_immune_deconv |    Fibroblasts              delta=-0.252  rbc=-0.100  p=0.169  FDR=0.188 
+2026-08-31 06:52:57,554 | INFO    | 06_immune_deconv |    Monocytic lineage        delta=-0.088  rbc=-0.042  p=0.563  FDR=0.563 
+2026-08-31 06:52:57,554 | INFO    | 06_immune_deconv | GATE 6 VERDICT: 8/10 populations significant at FDR 0.05. The signature separates risk groups that ALSO differ in immune infiltration -- it is at least partly an immune readout.
+2026-08-31 06:52:57,555 | INFO    | 06_immune_deconv | wrote results/tables_5y/gate6_summary.json

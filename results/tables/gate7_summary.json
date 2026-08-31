@@ -1,0 +1,43 @@
+{
+  "metabric_n": 1902,
+  "metabric_positives": 359,
+  "metabric_positive_rate": 0.1887,
+  "best_metabric_auc": 0.6321,
+  "best_panel_size": 20,
+  "best_model": "logreg_l2",
+  "km": {
+    "metabric": {
+      "groups": {
+        "0": {
+          "n": 951,
+          "events": 401,
+          "median_survival": 6489.275
+        },
+        "1": {
+          "n": 951,
+          "events": 402,
+          "median_survival": 7678.366666666677
+        }
+      },
+      "logrank_p": 0.6857150051016916,
+      "logrank_stat": 0.1637634144195533
+    },
+    "tcga": {
+      "groups": {
+        "0": {
+          "n": 184,
+          "events": 39,
+          "median_survival": 4203.0
+        },
+        "1": {
+          "n": 183,
+          "events": 71,
+          "median_survival": Infinity
+        }
+      },
+      "logrank_p": 0.0001790244377644116,
+      "logrank_stat": 14.039353919989036
+    }
+  },
+  "methylation_limitation": "METABRIC has no matched Illumina 450k methylation; only the expression component of the signature was externally validated."
+}
